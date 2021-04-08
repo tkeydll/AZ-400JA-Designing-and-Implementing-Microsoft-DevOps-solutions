@@ -204,7 +204,9 @@ lab:
 1.  Azure DevOps ポータルが表示されている Web ブラウザー ウィンドウで、Azure DevOps ポータルの一番左にある垂直メニュー バーの 「**Pipelines**」 セクションで 「**Releases**」 をクリックします。
 1.  「**Pipelines / Releases**」 ペインで 「**MyHealth.AKS.Release**」 エントリを選択し、「**Edit**」 をクリックします。
 1.  「**All pipelines / MyHealth.AKS.Release**」 ペインで、デプロイの **Dev** ステージを示す長方形の中にある 「**2 jobs, 3 tasks**」 リンクをクリックします。
+1. **Dev** ステージのタスク一覧の 「**DB deployment**」をクリックし、**Agent Pool** を **Azure Pipeline** に、**Agent Specification** を **vs2017-win2016** に設定します。
 1.  **Dev** ステージのタスク一覧の 「**DB deployment**」 ジョブ セクション内で 「**Execute Azure SQL: DacpacTask**」 タスクを選択します。右側の 「**Azure SQL Database deployment**」 ペインで 「**Azure subscription**」 ドロップダウン リストから、このタスクで先ほど作成した Azure サービス接続を示すエントリを選択します。
+1. **Dev** ステージのタスク一覧の 「**AKS deployment**」をクリックし、**Agent Pool** を **Azure Pipeline** に、**Agent Specification** を **vs2017-win2016** に設定します。
 1.  **Dev** ステージのタスク一覧の 「**AKS deployment**」 ジョブセクションで、「**Create Deployments & Services in AKS**」 タスクを選択します。
 1.  右側の 「**Kubectl**」 ペインで 「**Azure subscription**」 ドロップダウン リストから、同じ Azure サービス接続を示すエントリを選択します。「**Resource group**」 ドロップダウン リストから 「**az400m16l01a-RG**」 エントリを選択し、「**Kubernetes クラスター**」 ドロップダウン リストからこのラボで先ほどデプロイした AKS クラスターを示すエントリを選択します。
 1.  **Dev** ステージのタスク一覧の 「**AKS deployment**」 ジョブ セクションで、「**Create Deployments & Services in AKS**」 タスクを選択します。右側の 「**Kubectl**」 ペインでスクロールダウンし、「**Secrets**」 セクションを拡張します。「**Azure subscription**」 ドロップダウン リストから同じ Azure サービス接続を示すエントリを選択します。「**Azure container registry**」 ドロップダウン リストから、このラボで先ほど作成した Azure Container レジストリを示すエントリを選択します。
