@@ -70,7 +70,7 @@ Azure への移行の一環として Web アプリケーションをモダン化
 #### タスク 2: Docker Desktop を構成する 
 
 1.  ラボのコンピューターで Web ブラウザーを起動し、[Docker ドキュメント サイト](https://docs.docker.com/docker-for-windows/install/#download-docker-for-windows)に移動します。既定の設定で Docker Desktop for Windows をダウンロードしてインストールします。
-1.  ラボのコンピューターでタスクバーを拡張し、「**Docker**」 アイコンを右クリックします。右クリック メニューで 「**Windows コンテナーに切り替える**」 オプションを選択します。
+1.  ラボのコンピューターでタスクバーの右下にある「**Docker**」 アイコンを右クリックします。右クリック メニューで 「**Windows コンテナーに切り替える**」 オプションを選択します。
 1.  確定するよう指示されたら、「**切り替え**」 をクリックします。
 
 ### 演習 1: Nerd Dinner アプリケーションをモダン化する
@@ -130,11 +130,11 @@ Azure への移行の一環として Web アプリケーションをモダン化
 このタスクでは、前のタスクで作成した Azure SQL データベースにアプリケーションの LocalDB を移行します。
 
 1.  Visual Studio のトップ メニューで 「**表示**」 をクリックし、ドロップダウン メニューで 「**SQL Server オブジェクト エクスプローラー**」 をクリックします。
-1.  「**SQL Server オブジェクト エクスプローラー**」 ペインで 「**サーバーの追加**」 アイコンをクリックします。「**接続**」 ダイアログ ボックスで以下の設定を指定し、「**接続**」 をクリックします (**<server-name>** は、前のタスクで作成した論理サーバーの名前に置き換えます):
+1.  「**SQL Server オブジェクト エクスプローラー**」 ペインで 「**サーバーの追加**」 アイコンをクリックします。「**接続**」 ダイアログ ボックスで以下の設定を指定し、「**接続**」 をクリックします (**server-name** は、前のタスクで作成した論理サーバーの名前に置き換えます):
 
     | 設定 | 値 | 
     | --- | --- |
-    | サーバー名 | **<server-name>.database.windows.net** |
+    | サーバー名 | **server-name.database.windows.net** |
     | 認証 | **SQL Server 認証** |
     | 「ユーザー名」 | **sqluser** |
     | パスワード | **Pa55w.rd1234** |
@@ -148,7 +148,7 @@ Azure への移行の一環として Web アプリケーションをモダン化
 1.  「**ターゲット スキーマの選択**」 ダイアログ ボックスで 「**データベース**」 オプションが選択されていることを確認して 「**接続の選択**」 をクリックします。「**接続**」 ダイアログ ボックスで **nerddinnerlab** Azure SQL データベースを選択し、「**接続**」 を選択します。「**ターゲット スキーマの選択**」 ダイアログ ボックスに戻り、「**OK**」 をクリックします。
 1.  Visual Studio ウィンドウの中央のペインにある 「**SqlSchemaCompare1**」 タブで 「**比較**」 をクリックします。比較が完了するまで待ちます。
 1.  比較が完了したら、「**SqlSchemaCompare1**」 タブで 「**更新**」 をクリックし、確定するよう指示されたら 「**はい**」 をクリックします。
-1.  「**SqlSchemaCompare1**」 タブを閉じます。
+1.  「**SqlSchemaCompare1**」 タブを閉じます。保存する必要はありません。
 
     > **注**: LocalDB インスタンスから、新しくプロビジョニングされた Azure SQL データベースにデータをコピーします。
 
@@ -160,7 +160,7 @@ Azure への移行の一環として Web アプリケーションをモダン化
 
     > **注**: コード変更を避けるため、**web.config** 変換を使用します。この特定のケースでは、新しい 「**web.release.config**」 エントリを追加します。 
 
-1.  Visual Studio の 「**ソリューション エクスプローラー**」 ペインで 「**Web.config**」 エントリを拡張して 「**Web.Release.config**」 を選択します。Visual Studio ウィンドウの中央のペインで **Web.Release.config** ファイルが開きます。
+1.  Visual Studio の 「**ソリューション エクスプローラー**」 ペインで 「**Web.config**」 エントリを展開して 「**Web.Release.config**」 を選択します。Visual Studio ウィンドウの中央のペインで **Web.Release.config** ファイルが開きます。
 1.  「**Web.Release.config**」 ペインで、`<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">` ラインのすぐ下に次のエントリを追加します (`<server_name>` プレースホルダーは、この演習の最初のタスクで作成したサーバーの名前に置き換えます):
 
     ```csharp
@@ -195,6 +195,21 @@ Azure への移行の一環として Web アプリケーションをモダン化
     > **注**: Visual Studio はベース イメージをダウンロードし、その後、デプロイ用のイメージをビルドします。ビルドが完了したら、ローカル ブラウザーを起動するアプリケーションが表示されます。
 
     > **注**: 利用可能な帯域幅によっては、ダウンロードに長時間かかる可能性があります。
+
+    > **注** 以下のエラーが発生することがあります。
+    ```
+    Error MSB4018 The "PrepareForLaunch" task failed unexpectedly.
+    System.IO.FileNotFoundException: Could not load file or assembly 'Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed' or one of its dependencies. 
+    ```
+    >エラーが発生した場合は、以下を実施してください。
+    > - Nuget パッケージマネージャで Newtonsoft.json を 9.0.1 にアップグレード
+    > - C:¥Users¥Admins¥Source¥Repos¥narddinner-mvc4¥packages¥Newtonsoft.json.9.0.1\net45\Newtonsoft.Json.dll を C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Sdks\Microsoft.Docker.Sdk\tools 配下にコピー
+    > - Visual Studio を再起動
+    
+    > 以下のエラーが発生しても無視して、次のステップに進んでください。
+      ```
+      Windows does not support host IP addresses in NAT settings
+      ```
 
 1.  ラボのコンピューターで管理者として**コマンド プロンプト**を起動し、「**管理者: C:\\windows\\system32\cmd.exe**」 から以下を実行して、ローカル docker イメージを一覧表示し、リストに **Dockerfile** で参照されたイメージが含まれていることを確認します:
 
