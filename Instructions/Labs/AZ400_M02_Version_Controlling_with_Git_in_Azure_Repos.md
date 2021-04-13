@@ -1,7 +1,7 @@
 ---
 lab:
-  title: "ラボ: Azure Repos での Git によるバージョン管理"
-  module: "モジュール 2: ソース管理の開始"
+  title: 'ラボ: Azure Repos での Git によるバージョン管理'
+  module: 'モジュール 2: ソース管理の開始'
 ---
 
 # ラボ: Azure Repos の Git によるバージョン管理

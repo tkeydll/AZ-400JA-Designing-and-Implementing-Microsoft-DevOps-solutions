@@ -1,18 +1,17 @@
----
+﻿---
 lab:
-  title: "ラボ: Configuring Agent Pools and Understanding Pipeline Styles"
-  module: "モジュール 5: Configuring Azureの構成"
+    title: 'ラボ: エージェント プールの構成とパイプライン スタイルの理解'
+    module: 'モジュール 5: Configuring Azureの構成'
 ---
 
-# ラボ: エージェント プールの設定とパイプライン スタイルの理解
-
+# ラボ: エージェント プールの構成とパイプライン スタイルの理解
 # 学生用ラボ マニュアル
 
 ## ラボの概要
 
-YAML ベースのパイプラインを使用すると、CI/CD をコードとして完全に実装できます。パイプライン定義は、Azure DevOps プロジェクトの一部であるコードと同じリポジトリにあります。YAML ベースのパイプラインは、プルリクエスト、コードレビュー、履歴、分岐、テンプレートなど、従来のパイプラインの一部である幅広い機能をサポートします。
+YAML ベースのパイプラインを使用すると、CI/CD をコードとして完全に実装できます。パイプライン定義は、Azure DevOps プロジェクトの一部であるコードと同じリポジトリにあります。YAML ベースのパイプラインは、プルリクエスト、コードレビュー、履歴、分岐、テンプレートなど、従来のパイプラインの一部である幅広い機能をサポートします。 
 
-パイプライン スタイルの選択に関係なく、Azure Pipelines を使用してコードをビルドしたりソリューションをデプロイしたりするには、エージェントが必要です。エージェントは、一度に 1 つのジョブを実行するコンピューティング リソースをホストします。ジョブは、エージェントのホスト マシンで直接実行することも、コンテナーで実行することもできます。管理されている Microsoft がホストするエージェントを使用してジョブを実行するか、自分で設定および管理するセルフホステッド エージェントを実装するかを選択できます。
+パイプライン スタイルの選択に関係なく、Azure Pipelines を使用してコードをビルドしたりソリューションをデプロイしたりするには、エージェントが必要です。エージェントは、一度に 1 つのジョブを実行するコンピューティング リソースをホストします。ジョブは、エージェントのホスト マシンで直接実行することも、コンテナーで実行することもできます。管理されている Microsoft がホストするエージェントを使用してジョブを実行するか、自分で設定および管理するセルフホステッド エージェントを実装するかを選択できます。 
 
 このラボでは、従来のパイプラインを YAML ベースのパイプラインに変換し、最初に Microsoft がホストするエージェントを使用して実行し、次にセルフホステッド エージェントを使用して同等のタスクを実行するプロセスを順を追って説明します。
 
@@ -25,31 +24,31 @@ YAML ベースのパイプラインを使用すると、CI/CD をコードとし
 
 ## ラボの所要時間
 
-- 推定時間: **90 分**
+-   推定時間: **45 分**
 
-## 手順
+## 指示
 
 ### 開始する前に
 
 #### ラボの仮想マシンにログインする
 
-次の資格情報を使用して、Windows 10 コンピューターにサインインしていることを確認します。
-
-- ユーザー名: **Student**
-- パスワード: **Pa55w.rd**
+必ず次の資格情報を使用して Windows 10 コンピューターにサインインしてください。
+    
+-   ユーザー名: **Student**
+-   パスワード: **Pa55w.rd**
 
 #### インストールされているアプリケーションを確認します
 
 Windows 10 デスクトップでタスク バーを探します。タスク バーには、この課題で使用するアプリケーションのアイコンが含まれています:
-
-- Microsoft Edge
-- [Visual Studio Code](https://code.visualstudio.com/)
+    
+-   Microsoft Edge
+-   [Visual Studio Code](https://code.visualstudio.com/).このラボでは前提条件の一部としてインストールされます。
 
 #### Azure DevOps 組織を設定する
 
-このラボで使用できる Azure DevOps 組織がまだない場合は、[組織またはプロジェクト コレクションの作成](https://docs.microsoft.com/ja-jp/azure/devops/organizations/accounts/create-organization?view=azure-devops)の手順に従って作成してください。
+このラボで使用できる Azure DevOps 組織がまだない場合は、[組織またはプロジェクト コレクションの作成](https://docs.microsoft.com/ja-jp/azure/devops/organizations/accounts/create-organization?view=azure-devops) で利用できる手順に従って作成してください。
 
-### 演習 0: ラボの前提条件を構成する
+### 演習 0: ラボの前提条件の構成
 
 この演習では、ラボの前提条件を設定します。Azure DevOps Demo Generator テンプレートに基づいて事前構成された Parts Unlimited チームプロジェクトで構成されます。
 
@@ -57,219 +56,215 @@ Windows 10 デスクトップでタスク バーを探します。タスク バ�
 
 このタスクでは、Azure DevOps Demo Generator を使用して、**PartsUnlimited** テンプレートに基づいて新しいプロジェクトを生成します。
 
-1.  ラボ コンピューターで、Web ブラウザーを起動し、[Azure DevOps Demo Generator](https://azuredevopsdemogenerator.azurewebsites.net) に移動します。このユーティリティ サイトは、ラボに必要なコンテンツ (作業項目、リポジトリなど) が事前に入力されたアカウント内に新しい Azure DevOps プロジェクトを作成するプロセスを自動化します。
+1.  ラボのコンピューターで Web ブラウザーを起動し、[Azure DevOps Demo Generator](https://azuredevopsdemogenerator.azurewebsites.net) に移動します。このユーティリティ サイトは、ラボで必要なコンテンツ (作業項目、リポジトリなど) が事前設定されている新しい Azure DevOps プロジェクトをアカウント内で作成するプロセスを自動化します。 
 
-    > **注**: サイトの詳細については、https://docs.microsoft.com/ja-jp/azure/devops/demo-gen を参照してください。
+    > **注**: サイトの詳細については、https://docs.microsoft.com/ja-jp/azure/devops/demo-gen をご覧ください。
 
-1.  「**サインイン**」 をクリックし、Azure DevOps サブスクリプションに関連付けられている Microsoft アカウントを使用してサインインします。
-1.  必要な場合は、**Azure DevOps Demo Generator** ページで、「**承諾する**」 をクリックして、Azure DevOps サブスクリプションにアクセスするためのアクセス許可の要求を受け入れます。
-1.  「**Create New Project**」 ページの 「**New Project Name**」 テキスト ボックスに「**Configuring Agent Pools and Understanding Pipeline Styles**」と入力し、「**Select organization**」 ドロップダウン リストで、Azure DevOps 組織を選択して、「**Choose a template**」 をクリックします。
-1.  「**Choose a template**」 ページで、**PartsUnlimited** テンプレートをクリックし、「**Choose a template**」 をクリックします。
-1.  「**Create Project**」 をクリックします。
+1.  「**サインイン**」 をクリックし、Azure DevOps サブスクリプションに関連のある Microsoft アカウントを使用してサインインします。
+1.  必要な場合は、「**Azure DevOps Demo Generator**」 ページで 「**承諾する**」 をクリックし、Azure DevOps サブスクリプションへのアクセス許可要求を承諾します。
+1.  「**新しいプロジェクトの作成**」 ページの 「**新しいプロジェクト名**」 テキスト ボックスに「**エージェント プールの構成とパイプライン スタイルの理解**」と入力し、「**組織の選択**」 ドロップダウン リストで、Azure DevOps 組織を選択して、「**テンプレートの選択**」 をクリックします。
+1.  「**テンプレートの選択**」 ページで、**PartsUnlimited** テンプレートをクリックし、「**テンプレートの選択**」 をクリックします。
+1.  「**プロジェクトの作成**」 をクリックします。
 
     > **注**: プロセスが完了するまでお待ちください。これにはおよそ 2 分かかります。プロセスが失敗した場合は、DevOps 組織に移動し、プロジェクトを削除して、再試行してください。
 
-1.  「**Create New Project**」 ページで、「**Navigate to project**」 をクリックします
+1.  「**新しいプロジェクトの作成**」 ページで 「**プロジェクトに移動**」 をクリックします。
 
-1.  [**Create a new project**]ページで、[**Navigate to project**]をクリックします。
+### 演習 1: YAML ベースの Azure DevOps パイプラインを作成する
 
-### 演習 1：YAML ベースの AzureDevOps パイプラインを作成する
+この演習では、従来の Azure DevOps パイプラインを YAML ベースのパイプラインに変換します。 
 
-この演習では、従来の AzureDevOps パイプラインを YAML ベースのパイプラインに変換します。
-
-#### タスク 1： Azure DevOps YAML パイプラインを作成する
+#### タスク 1: Azure DevOps YAML パイプラインを作成する
 
 このタスクでは、テンプレートベースの Azure DevOps YAML パイプラインを作成します。
 
-1. **Configuring Agent Pools and Understanding Pipeline Styles**プロジェクトが開いた状態で AzureDevOps ポータルを表示している Web ブラウザーから、左側の垂直ナビゲーションペインで[**Pipelines**]をクリックします。
-1. [**Pipelines**]ペインの[**Recent**]タブで、[**New pipeline**]をクリックします。
-1. [**Where is your code?**]ペインで、**Azure Repos Git**をクリックします。
-1. [**Select a repository**]ペインで、[**PartsUnlimited**]をクリックします。
-1. [**Configure your pipeline**]ペインで、[**Starter pipeline**]をクリックします。
-1. [**Review your pipeline YAML**]ペインで、サンプルパイプラインを確認し、[**Save and run**]ボタンの横にある下向きのキャレット記号をクリックし、[**Save**]をクリックします。
-1. [**Save**]ペインで、[**Save**]をクリックします。
+1.  **エージェント プールの構成とパイプライン スタイルの理解**プロジェクトが開いた状態で Azure DevOps ポータルを表示している Web ブラウザーから、左側の垂直ナビゲーション ペインで 「**パイプライン**」 をクリックします。 
+1.  「**パイプライン**」 ペインの 「**最近**」 タブで、「**新しいパイプライン**」 をクリックします。
+1.  「**コードはどこにありますか?**」 ペインで 「**Azure Repos Git **」 をクリックします。 
+1.  「**リポジトリの選択**」 ペインで 「**PartsUnlimited**」 をクリックします。
+1.  「**パイプラインの構成**」 ペインで、「**スターター パイプライン**」 をクリックします。
+1.  「**パイプライン YAML の確認**」 ペインでサンプル パイプラインを確認し、「**保存して実行**」 ボタンの横にある下向きのキャレット記号をクリックして 「**保存**」 をクリックし、「**保存**」 ペインで 「**保存**」 をクリックします。
 
-   > **注**：これにより、プロジェクトコードをホストするリポジトリのルートディレクトリに**azure-pipelines.yml**ファイルが作成されます。
+    > **注**: これにより、プロジェクト コードをホストするリポジトリのルート ディレクトリに **azure-pipelines.yml** ファイルが作成されます。
 
-   > **注**：サンプルの YAML パイプラインのコンテンツを、クラシックエディターによって生成されたパイプラインのコードに置き換え、クラシックパイプラインと YAML パイプラインの違いを考慮して変更します。
+    > **注**: サンプル YAML パイプラインのコンテンツをクラシック エディターによって生成されたパイプラインのコードに置き換え、クラシック パイプラインと YAML パイプラインの違いを考慮して変更します。
 
-#### タスク 2：クラシックパイプラインを YAML パイプラインに変換する
+#### タスク 2: クラシック パイプラインを YAML パイプラインに変換する
 
-このタスクでは、クラシックパイプラインを YAML パイプラインに変換します
+このタスクでは、クラシック パイプラインを YAML パイプラインに変換します。
 
-1. 左側の垂直ナビゲーションペインで[**Pipelines**]をクリックします。
-1. **Pipelines**ペインの**Recent**タブで、**PartsUnlimitedE2E**エントリの右端にマウスポインタを合わせて省略記号をクリックし、ドロップダウンメニューで[**Edit**]をクリックします。これにより、ラボの開始時に生成したプロジェクトの一部であるビルドパイプラインが表示されます。
-1. **PartsUnlimitedE2E**編集ペインの[**Triggers**]をクリックし、[**PartsUnlimited**]ペインの右側にある[**Enable continuous integration**]チェックボックスをオフにします。 [**Save & queue**]ボタンの横にある下向きのキャレットをクリックし、ドロップダウンメニューで[**Save**]をクリックし、[**Save build pipeline**]で[**Save**]をクリックします。
+1.  **エージェント プールの構成とパイプライン スタイルの理解**プロジェクトが開いた状態で Azure DevOps ポータルを表示している Web ブラウザーから、左側の垂直ナビゲーション ペインで 「**パイプライン**」 をクリックします。 
+1.  「**パイプライン**」 ペインの 「**最近**」 タブで、**PartsUnlimitedE2E** エントリを含むエントリの右端にマウス ポインターを合わせると、「**その他**」 メニューを示す縦の省略記号が表示され、省略記号をクリックして、ドロップダウン メニューで 「**編集**」 をクリックします。これにより、ラボの開始時に生成したプロジェクトの一部であるビルド パイプラインが表示されます。 
+1.  **PartsUnlimitedE2E** 編集ペインの 「**タスク**」 タブで、「**トリガー**」 をクリックし、**PartsUnlimited** ペインの右側で 「**継続的インテグレーションを有効にする**」 チェックボックスをオフにし、「**保存とキュー**」 ボタンの横にある下向きのキャレットをクリックし、ドロップダウン メニューで 「**保存**」 をクリックし、「**ビルド パイプラインの保存**」 で 「**保存**」 をクリックします。
 
-   > **注**：これにより、このラボ中にリポジトリが変更されたために、意図しない自動ビルドが実行されるのを防ぐことができます。
+    > **注**: これにより、このラボ中にリポジトリが変更されたために、意図しない自動ビルドが実行されるのを防ぐことができます。
 
-   > **注**：または、コンテンツを新しいパイプラインにコピーしたら、既存のパイプラインを削除することもできます。
+    > **注**: または、コンテンツを新しいパイプラインにコピーしたら、既存のパイプラインを削除することもできます。
 
-1. Azure DevOps ポータルの左側の垂直ナビゲーションペインの[**Pipelines**]をクリックします。
-1. **Pipelines**ペインの**Recent**タブで、**PartsUnlimitedE2E**エントリをクリックします。
-1. **PartsUnlimitedE2E**ペインの**Run pipeline**の横にある、縦の省略記号(3 つの縦のドット)記号をクリックし、ドロップダウンメニューで[**Export to YAML**]をクリックします。 これにより、**PartsUnlimitedE2E.yml**ファイルがローカルの**Downloads**フォルダーに自動的にダウンロードされます。
+1.  Azure DevOps ポータルの左側の垂直ナビゲーション ペインの 「**パイプライン**」 セクションで、「**パイプライン**」 をクリックします。 
+1.  「**パイプライン**」 ペインの 「**最近**」 タブで、**PartsUnlimitedE2E** エントリをクリックします。 
+1.  **PartsUnlimitedE2E** ペインの 「**実行**」 タブの右上隅にある縦の省略記号 (垂直の 3 つの点) をクリックし、ドロップダウン メニューで 「**YAML にエクスポート**」 をクリックします。これにより、**PartsUnlimitedE2E.yml** ファイルがローカルの**ダウンロード** フォルダーに自動的にダウンロードされます。
 
-   > **注**：**Export to YAML** 機能は、AzureDevOps ポータル内のパイプラインエディターペインから利用できる古い**View YAML**オプションを置き換えます。これは、一度に 1 つのジョブの YAML コンテンツの表示に制限されていました。新しい機能は、YAML 解析ライブラリを含む既存のクラシックおよび YAML パイプラインインフラストラクチャを活用します。これにより、2 つの間のより正確な変換が実現します。次のパイプラインコンポーネントをサポートします。
+    > **注**: 「**YAML にエクスポート**」 機能は、Azure DevOp sポータル内のパイプライン エディター ペインから使用できる古い 「**YAML の表示**」 オプションに置き換わるもので、一度に 1 つのジョブで YAML コンテンツを表示するように制限されていました。新しい機能は、YAML 解析ライブラリを含む既存のクラシックおよび YAML パイプライン インフラストラクチャを活用し、2 つの間のより正確な変換を実現します。次のパイプライン コンポーネントをサポートします。
 
-   - 単一および複数のジョブ
-   - チェックアウトオプション
-   - 実行プランの並列処理
-   - タイムアウトと名前のメタデータ
-   - Demands
-   - スケジュールおよびその他のトリガー
-   - デフォルトとは異なるジョブを含むプールの選択
-   - デフォルト入力の最適化を含む、すべてのタスクとすべての入力
-   - ジョブとステップの条件
-   - タスクグループの展開
+    - 単一および複数のジョブ
+    - チェックアウト オプション
+    - 実行プランの並列処理
+    - タイムアウトと名前のメタデータ
+    - 需要
+    - スケジュールとその他のトリガー
+    - デフォルトとは異なるジョブを含むプールの選択
+    - すべてのタスクとすべての入力 (デフォルトの入力の最適化を含む)
+    - ジョブとステップの条件
+    - タスク グループの展開
 
-   > **注**：新しい機能でカバーされていないコンポーネントは、変数とタイムゾーン変換のみです。YAML で定義された変数は、AzureDevOps ポータルのユーザーインターフェイスで設定された変数をオーバーライドします。**Export to YAML**機能がクラシックパイプライン変数の存在を検出した場合、それらは新しく生成された YAML パイプライン定義内のコメントに明示的に含まれます。同様に、YAML の cron スケジュールは UTC で表されるため、従来のスケジュールは組織のタイムゾーンに依存するため、それらの存在もコメントに含まれます。
+    > **注**: 新しい機能でカバーされていないコンポーネントは、変数とタイムゾーン変換のみです。YAML で定義された変数は、Azure DevOps ポータルのユーザー インターフェイスで設定された変数をオーバーライドします。**YAML へのエクスポート**機能がクラシック パイプライン変数の存在を検出した場合、それらは新しく生成された YAML パイプライン定義内のコメントに明示的に含まれます。同様に、YAML の cron スケジュールは UTC で表されるため、従来のスケジュールは組織のタイムゾーンに依存するため、その存在もコメントに含まれます。
 
-   > **注**：この機能の詳細については、["View YAML"の置き換え](https://devblogs.microsoft.com/devops/replacing-view-yaml/)を参照してください。
+    > **注**: この機能の詳細については、「[View YAML」の置き換え](https://devblogs.microsoft.com/devops/replacing-view-yaml/)を参照してください。
 
-1. ラボコンピューターで、Visual Studio Code を起動し、それを使用してファイル**PartsUnlimitedE2E.yml**を開きます。ファイルには次の内容が含まれている必要があります。
+1.  ラボ コンピューターで、Visual Studio Code を起動し、それを使用してファイル **PartsUnlimitedE2E.yml** を開きます。ファイルには、次の内容を含める必要があります。
 
-   ```yaml
-   name: $(date:yyyyMMdd)$(rev:.r)
-   jobs:
-     - job: Phase_1
-       displayName: Phase 1
-       cancelTimeoutInMinutes: 1
-       pool:
-         vmImage: vs2017-win2016
-       steps:
-         - checkout: self
-         - task: NuGetInstaller@0
-           name: NuGetInstaller_1
-           displayName: NuGet restore
-           inputs:
-             solution: '**\*.sln'
-         - task: VSBuild@1
-           name: VSBuild_2
-           displayName: Build solution
-           inputs:
-             vsVersion: 15.0
-             msbuildArgs: /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"
-             platform: $(BuildPlatform)
-             configuration: $(BuildConfiguration)
-         - task: VSTest@1
-           name: VSTest_3
-           displayName: Test Assemblies
-           inputs:
-             testAssembly: '**\$(BuildConfiguration)\*test*.dll;-:**\obj\**'
-             codeCoverageEnabled: true
-             vsTestVersion: latest
-             platform: $(BuildPlatform)
-             configuration: $(BuildConfiguration)
-         - task: CopyFiles@2
-           name: CopyFiles1
-           displayName: Copy Files
-           inputs:
-             SourceFolder: $(build.sourcesdirectory)
-             Contents: "**/*.json"
-             TargetFolder: $(build.artifactstagingdirectory)
-         - task: PublishBuildArtifacts@1
-           name: PublishBuildArtifacts_5
-           displayName: Publish Artifact
-           inputs:
-             PathtoPublish: $(build.artifactstagingdirectory)
-             TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
-   ```
+    ```yaml
+    name: $(date:yyyyMMdd)$(rev:.r)
+    jobs:
+    - job: Phase_1
+      displayName: Phase 1
+      cancelTimeoutInMinutes：11
+      pool:
+        vmImage: vs2017-win2016
+      steps:
+      - checkout: self
+      - task: NuGetInstaller@0
+        name: NuGetInstaller_1
+        displayName: NuGet restore
+        inputs:
+          solution: '**\*.sln'
+      - task: VSBuild@1
+        name: VSBuild_2
+        displayName: Build solution
+        inputs:
+          vsVersion: 15.0
+          msbuildArgs: /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.stagingDirectory)" /p:IncludeServerNameInBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbolStorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+      - task: VSTest@1
+        name: VSTest_3
+        displayName: Test Assemblies
+        inputs:
+          testAssembly：'**\$(BuildConfiguration)\*test*.dll;-:**\obj\**'
+          codeCoverageEnabled: true
+          vsTestVersion: latest
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+      - task: displayName：2@のCopyFiles
+        name: CopyFiles1
+        displayName: Copy Files
+        inputs:
+          SourceFolder: $(build.sourcesdirectory)
+          Contents: '**/*.json'
+          TargetFolder: $(build.artifactstagingdirectory)
+      - task: PublishBuildArtifacts@1
+        name: PublishBuildArtifacts_5
+        displayName: Publish Artifact
+        inputs:
+          PathtoPublish: $(build.artifactstagingdirectory)
+          TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
+    ...
+    ```
 
-1. Visual Studio Code ウィンドウのトップレベルメニューで[**選択**]をクリックし、ドロップダウンメニューで[**すべて選択**]をクリックします。
-1. Visual Studio Code ウィンドウのトップレベルメニューで[**Edit**]をクリックし、ドロップダウンメニューで[**コピー**]をクリックします。
-1. Azure DevOps ポータルを表示しているブラウザーウィンドウに切り替え、左側の垂直ナビゲーションペインの[**Pipelines**]をクリックします。
+1.  Visual Studio Code ウィンドウのトップレベル メニューで 「**選択**」 をクリックし、ドロップダウン メニューで 「**すべて選択**」 をクリックします。
+1.  Visual Studio Code ウィンドウのトップレベルメニューで 「**編集**」 をクリックし、ドロップダウン メニューで 「**コピー**」 をクリックします。
+1.  Azure DevOps ポータルを表示しているブラウザー ウィンドウに切り替え、左側の垂直ナビゲーション ペインの 「**パイプライン**」 セクションで、「**パイプライン**」 をクリックします。 
+1.  「**パイプライン**」 ペインの 「**最近**」 タブで 「**PartsUnlimited**」 を選択し、「**PartsUnlimited**」 ペインで 「**編集**」 を選択します。
+1.  **PartsUnlimited** 編集ペインで、パイプラインの既存の YAML コンテンツを選択し、クリップボードのコンテンツに置き換えます。
+1.  **PartsUnlimited** 編集ペインの右上隅にある 「**保存**」 をクリックし、「**保存**」 ペインの 「**保存**」 をクリックします。これにより、このパイプラインに基づいてビルドが自動的にトリガーされます。 
+1.  Azure DevOps ポータルの左側の垂直ナビゲーション ペインの 「**パイプライン**」 セクションで、「**パイプライン**」 をクリックします。
+1.  「**パイプライン**」 ペインの 「**最近**」 タブで、「**PartsUnlimited**」 エントリをクリックし、「**PartsUnlimited**」 ペインの 「**実行**」 タブで最新の実行を選択し、実行の 「**概要**」 ペインで一番下までスクロールし、「**ジョブ**」 セクションで 「**フェーズ 1**」 をクリックし、正常に完了するまでジョブを監視します。 
 
-1. **Pipelines**ペインの**Recent**タブで**PartsUnlimited**を選択し、**PartsUnlimited**ペインで**Edit**を選択します。
-1. **PartsUnlimited** 編集ペインで、パイプラインの既存の YAML コンテンツを選択して削除し、クリップボードのコンテンツに置き換えます。
-1. **PartsUnlimited** 編集ペインの右上隅にある[**Save**]をクリックし、[**Save**]ペインで[**Save**]をクリックします。これにより、このパイプラインに基づいてビルドが自動的にトリガーされます。
-1. Azure DevOps ポータルの左側の垂直ナビゲーションペインの[**Pipelines**]をクリックします。
-1. **Pipelines**ペインの**Recent**タブで、**PartsUnlimited**エントリをクリックし、**PartsUnlimited**ペインの**Runs**タブで、最新の実行を選択します。 [**Summary**]ペインで、一番下までスクロールし、[**Jobs**]セクションで[**Phase 1**]をクリックして、正常に完了するまでジョブを監視します。
+### 演習 2: Azure DevOps エージェント プールを管理する
 
-### 演習 2：AzureDevOps エージェントプールを管理する
+この演習では、セルフホスティド Azure DevOps エージェントを実装します。
 
-この演習では、自己ホスト型の AzureDevOps エージェントを実装します。
+#### タスク 1: Azure DevOps セルフホスティングエージェントを構成する
 
-#### タスク 1：AzureDevOps セルフホスティングエージェントを構成する
+このタスクでは、LOD VM を Azure DevOps セルフホスティング エージェントとして構成し、それを使用してビルド パイプラインを実行します。
 
-このタスクでは、LOD VM を AzureDevOps セルフホスティングエージェントとして構成し、それを使用してビルドパイプラインを実行します。
+1.  ラボの仮想マシン (ラボ VM) またはお使いになっているコンピュータ内で、Web ブラウザーを起動し、[Azure DevOps ポータル](https://dev.azure.com)に移動し、Azure DevOps 組織に関連付けられている Microsoft アカウントを使用してサインインします。
+1.  Azure DevOps ポータルの Azure DevOps ページの右上コーナーで 「**ユーザー設定**」 アイコンをクリックします。ドロップダウン メニューで 「**個人用アクセス トークン**」 をクリックし、「**個人用アクセス トークン**」 ペインで 「**+ 新しいトークン**」 をクリックします。
+1.  「**新しい個人用アクセス トークンの作成**」 ペインで 「**すべてのスコープを表示**」 リンクをクリックし、以下の設定を指定します。「**作成**」 をクリックします (他はすべて、既定値のままにします):
 
-1. Lab 仮想マシン(Lab VM)またはご使用のコンピューター内で、Web ブラウザーを起動し、[Azure DevOps ポータル](https://dev.azure.com)に移動し、に関連付けられている Microsoft アカウントを使用してサインインします。
-1. Azure DevOps ポータルで、Azure DevOps ページの右上隅にある[**User Settings**]アイコンをクリックし、ドロップダウンメニューで[**Personal access tokens**]をクリックします。[**Personal access tokens**]ペインをクリックし、**+ New Token**をクリックします。
-1. [**Create a new personal access token**]ペインで、[**Show all scopes**]リンクをクリックし、次の設定を指定して[**Create**]をクリックします(他のすべてのスコープはデフォルト値のままにします)。
+    | 設定 | 値 |
+    | --- | --- |
+    | 名前 | **エージェント プールの構成とパイプライン スタイルの理解ラボ** |
+    | スコープ (カスタム定義) | **エージェント プール** (必要に応じて以下のスコープ オプションをさらに表示)|
+    | アクセス許可 | **読み取りと管理** |
 
-   | 設定                   | 値                                                                |
-   | ---------------------- | ----------------------------------------------------------------- |
-   | Name                   | **Configuring Agent Pools and Understanding Pipeline Styles lab** |
-   | Scope (custom defined) | **Agent Pools**                                                   |
-   | Permissions            | **Read & manage**                                                 |
+1.  「**成功**」 ペインで個人用アクセス トークンの値をクリップボードにコピーします。
 
-1. **Success**ペインで、パーソナルアクセストークンの値をクリップボードにコピーします。
+    > **注**: 必ずトークンをコピーしてください。このペインを閉じると、取得できなくなります。 
 
-   > **注**：トークンを必ずコピーしてください。このペインを閉じると、取得できなくなります。
+1.  「**成功**」 ペインで 「**閉じる**」 をクリックします。
+1.  Azure DevOps ポータルの 「**パーソナル アクセス トークン**」 ペインで、左上隅にある 「**Azure DevOps**」 記号をクリックしてから、左下隅にある 「**組織の設定**」 ラベルをクリックします。
+1.  「**概要**」 ペインの左側の垂直メニューの 「**パイプライン**」 セクションで、「**エージェント プール**」 をクリックします。
+1.  「**エージェント プール**」 ペインの右上隅にある 「**プールの追加**」 をクリックします。 
+1.  「**エージェント プールの追加**」 ペインの 「**プールの種類**」 ドロップダウン リストで、「**セルフホスティド**」 を選択し、「**名前**」 テキスト ボックスに「**az400m05l05a-pool**」と入力して、「**作成**」 をクリックします。
+1.  「**エージェント プール**」 ペインに戻り、新しく作成された **az400m05l05a-pool** を表すエントリをクリックします。 
+1.  **az400m05l05a-pool** ペインの 「**ジョブ**」 タブで、「**エージェント**」 ヘッダーをクリックします。
+1.  **az400m05l05a-pool** ペインの 「**エージェント**」 タブで、「**新しいエージェント**」 ボタンをクリックします。
+1.  「**エージェントの取得**」 ペインで、「**Windows**」 タブと 「**x64**」 タブが選択されていることを確認し、「**ダウンロード**」 をクリックしてエージェント バイナリを含む zip アーカイブをダウンロードし、ユーザー プロファイル内のローカルの**ダウンロード** フォルダーにダウンロードします。
 
-1. **Success**ペインで、**Close**をクリックします。
-1. AzureDevOps ポータルの左上隅の**Azure DevOps**をクリックしてから、左下隅の**Organization settings**ラベルをクリックします。
-1. **Summary**ペインの左側の垂直メニューの[**Pipelines**]セクションで、[**Agent pools**]をクリックします。
-1. [**Agent pools**]ペインの右上隅にある[**Add pool**]をクリックします。
-1. [**Add agent pool**]ペインの[**Pool type**]ドロップダウンリストで、[**Self-hosted**]を選択し、[**Name**]テキストボックスに**az400m05l05a-pool**と入力します。 次に、[**Create**]をクリックします。
-1. **Agent pools**ペインに戻り、新しく作成された**az400m05l05a-pool**を表すエントリをクリックします。
-1. **az400m05l05a-pool**ペインで、**New agent**ボタンをクリックします。
-1. [**Get the agent**]ペインで、[**Windows**]タブと[**x64**]タブが選択されていることを確認し、[**Downloads**]をクリックして、エージェントバイナリを含む zip アーカイブをダウンロードしてダウンロードします。ユーザープロファイル内のローカルの**Downloads**フォルダーに移動します。
+    > **注**: この時点で、現在のシステム設定でファイルのダウンロードができないことを示すエラーメッセージが表示された場合は、「インターネット エクスプローラー」 ウィンドウの右上隅にある、ドロップダウン メニューの 「**設定**」 メニュー ヘッダーを示す歯車の記号をクリックします。「**インターネット オプション**」 を選択し、「**インターネット オプション**」 ダイアログ ボックスで 「**詳細設定**」 をクリックし、「**詳細設定**」 タブで 「**リセット**」 をクリックし、「**インターネット エクスプローラー設定のリセット**」 ダイアログ ボックスで 「**リセット**」 をクリックし、「**閉じる**」 をクリックして、ダウンロードを再試行します。 
 
-   > **注**：この時点で、現在のシステム設定でファイルのダウンロードができないことを示すエラーメッセージが表示された場合は、インターネットエクスプローラウィンドウの右上隅にある **設定を示す歯車の記号をクリックします。** メニューヘッダーのドロップダウンメニューで[**インターネットオプション**]を選択し、[**インターネットオプション**]ダイアログボックスで[**Details**]をクリックし、[**Details**]タブで[**リセット**]をクリックします。[**インターネットエクスプローラの設定をリセット**]ダイアログボックスで、[**リセット**]をもう一度クリックし、[**Close**]をクリックして、ダウンロードを再試行します。
+1.  管理者として Windows PowerShell を 「**管理者: Windows PowerShell**」 コンソールから起動し、「**エージェントの取得**」 ペインに表示されている 「**エージェントの作成**」 コマンドをコピーします。以下のスクリプトを実行して **C:\\agent** ディレクトリを作成し、ダウンロードされたアーカイブの内容をそれに抽出します (すべてのコマンドが実行されたことを確認し、最後のコマンドが実行されなければ「Enter」をクリックします)。以下のようになります (最新バージョンではコピーされたものを使用します): 
 
-1. 管理者として WindowsPowerShell を起動し、**Administrator: Windows PowerShell**コンソールから、**Get the agent**ペインに表示されている**Create the agent**コマンドをコピーします。次のスクリプトを実行して**C:\agent**ディレクトリを作成し、ダウンロードしたアーカイブのコンテンツをそのディレクトリに抽出します(すべてのコマンドが実行されていることを確認し、最後のコマンドが実行されなかった場合は[Enter]をクリックします)。これは次のようになります(最新バージョンにはコピーしたものを使用してください)。
+    ```powershell
+    PS C:\> mkdir agent ; cd agent
+    PS C:\agent> Add-Type -AssemblyName System.IO.Compression.FileSystem ;
+    [System.IO.Compression.ZipFile]::ExtractToDirectory("$HOME\Downloads\vsts-agent-win-x64-[AGENT_VERSION].zip", "$PWD")
+    ```
 
-   ```powershell
-   PS C:\> mkdir agent ; cd agent
-   PS C:\agent> Add-Type -AssemblyName System.IO.Compression.FileSystem ;
-   [System.IO.Compression.ZipFile]::ExtractToDirectory("$HOME\Downloads\vsts-agent-win-x64-[AGENT_VERSION].zip", "$PWD")
-   ```
+1.  「**管理者: Windows PowerShell**」 コンソールで、以下を実行してエージェントを構成します。
 
-1. **Administrator: Windows PowerShell**コンソールを開き、以下を実行してエージェントを構成します。
+    ```powershell
+    .\config.cmd
+    ```
 
-   ```powershell
-   .\config.cmd
-   ```
+1.  プロンプトが表示されたら、次の設定の値を指定します。
 
-1. プロンプトが表示されたら、次の設定の値を指定します。
+    | 設定 | 値 |
+    | ------- | ----- |
+    | サーバーの URL を入力する | **https://dev.azure.com/`<organization_name>`** の形式でのAzure DevOps 組織の URL。ここで、`<organization_name>` は、Azure DevOps 組織の名前を表します |
+    | 認証タイプを入力する (PAT の場合は Enter 押します) | **Enter** |
+    | パーソナル アクセス トークンを入力する | このタスクの前半で記録したアクセス トークン |
+    | エージェント・プールを入力する (デフォルトで Enter を押します) | **az400m05l05a-pool** |
+    | エージェント名を入力する | **az400m05が-VM0** |
+    | 作業フォルダーを入力する (_work の場合は Enter 押します) | **Enter** |
+    | 「各ステップのタスクの解凍を実行する」と入力します。(N の場合は Enter を押します) | **Enter** |
+    | 「エージェントをサービスとして実行しますか?」入力します。(Y/N) (N の場合は Enter を押します) | **Y** |
+    | サービスで使用するユーザー アカウントを入力します (NT AUTHORITY\NETWORK SERVICE で Enter を押します) | **Enter** |
 
-   | Setting                                                                                  | Value                                                                                                                                                                                       |
-   | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-   | Enter server URL                                                                         | the URL of your Azure DevOps organization, in the format **https://dev.azure.com/`<organization_name>`**, where `<organization_name>` represents the name of your Azure DevOps organization |
-   | Enter authentication type (press enter for PAT)                                          | (ただエンターキーを押します)                                                                                                                                                                                   |
-   | Enter personal access token                                                              | Personal access token を貼り付けます                                                                                                                                          |
-   | Enter agent pool (press enter for default)                                               | **az400m05l05a-pool**                                                                                                                                                                       |
-   | Enter agent name                                                                         | **az400m05-vm0**                                                                                                                                                                            |
-   | Enter work folder (press enter for \_work)                                               | (ただエンターキーを押します)                                                                                                                                                                                   |
-   | Enter Perform an unzip for tasks for each step. (press enter for N)                      | (ただエンターキーを押します)                                                                                                                                                                                   |
-   | Enter run agent as service? (Y/N) (press enter for N)                                    | **Y**                                                                                                                                                                                       |
-   | Enter User account to use for the service (press enter for NT AUTHORITY\NETWORK SERVICE) | (ただエンターキーを押します)                                                                                                                                                                                   |
+    > **注**: セルフホスティド エージェントは、サービスまたは対話型プロセスとして実行できます。エージェントの機能の検証が簡単になるため、対話型モードから始めることをお勧めします。本番環境で使用する場合は、エージェントをサービスとして実行するか、自動ログオンを有効にした対話型プロセスとして実行することを検討する必要があります。どちらも実行状態を維持し、オペレーティング システムが再起動された場合にエージェントが自動的に起動するようにするためです。
 
-   > **注**：セルフホストエージェントは、サービスまたは対話型プロセスとして実行できます。エージェントの機能の検証が簡単になるため、インタラクティブモードから始めることをお勧めします。本番環境で使用する場合は、エージェントをサービスとして実行するか、自動ログオンを有効にした対話型プロセスとして実行することを検討する必要があります。どちらも実行状態を維持し、オペレーティングシステムが再起動された場合にエージェントが自動的に起動するようにするためです。
+    > **注**: エージェントが「**ジョブのリッスン**」ステータスを報告していることを確認します。
 
-   > **注**：エージェントが**Listening for Jobs**ステータスを報告していることを確認してください。
+1.  Azure DevOps ポータルを表示しているブラウザー ウィンドウに切り替えて、「**エージェントの取得**」 ペインを閉じます。
+1.  **az400m05l05a-pool** ペインの 「**エージェント**」 タブに戻り、新しく構成されたエージェントが 「**オンライン**」 ステータスで一覧表示されていることに注意してください。
+1.  Azure DevOps ポータルを表示している Web ブラウザー ウィンドウの左上隅にある、**Azure DevOps** ラベルをクリックします。
+1.  プロジェクトのリストを表示しているブラウザー ウィンドウで、**エージェント プールの構成とパイプライン スタイルの理解**プロジェクトを表すタイルをクリックします。 
+1.  「**エージェント プールの構成とパイプライン スタイルの理解**」 ペインの左側の垂直ナビゲーション ペインの 「**パイプライン**」 セクションで、「**パイプライン**」 をクリックします。 
+1.  「**パイプライン**」 ペインの 「**最近**」 タブで 「**PartsUnlimited**」 を選択し、「**PartsUnlimited**」 ペインで 「**編集**」 を選択します。
+1.  **PartsUnlimited** 編集ペインの既存の YAML ベースのパイプラインで、**7** 行目の `vmImage：vs2017-win2016` を置き換えて、ターゲット エージェント プールを指定し、次のコンテンツを指定し、新しく作成されたセルフホスティド エージェント プールを指定します：
 
-1. Azure DevOps ポータルを表示しているブラウザーウィンドウに切り替えて、[Get the agent]ペインを閉じます。
-1. **az400m05l05a-pool**ペインの**Agents**タブを開き、新しく構成されたエージェントが**Online**ステータスでリストされていることに注意してください。
-1. Azure DevOps ポータルを表示している Web ブラウザーウィンドウの左上隅にある、**Azure DevOps**ラベルをクリックします。
-1. プロジェクトのリストを表示しているブラウザウィンドウで、**Configuring Agent Pools and Understanding Pipeline Styles**プロジェクトを表すタイルをクリックします。
-1. [**Configuring Agent Pools and Understanding Pipeline Styles**]ペインの左側の垂直ナビゲーションペインの[**Pipelines**]をクリックします。
-1. **Pipelines**ペインの**Recent**タブで**PartsUnlimited**を選択し、**PartsUnlimited**ペインで**Edit**を選択します。
-1. **PartsUnlimited**編集ペインの既存の YAML ベースのパイプラインで、行**7**の `vmImage：vs2017-win2016`を置き換えて、ターゲットエージェントプールに次のコンテンツを指定し、新しく作成されたセルフホステッドエージェントプールを指定します：
-
-   ```yaml
-   pool:
-     name: az400m05l05a-pool
-     demands:
-       - agent.name -equals az400m05-vm0
-   ```
-
-1. [`Task: NugetInstaller@0`]で、**Settings(タスクの上に灰色で表示されているリンク)** をクリックし、**[Advanced]> [NuGet Version]> 4.0.0**を変更して、[**add**]をクリックします。
-1. **PartsUnlimited** Edit ペインのペインの右上隅にある[**Save**]をクリックし、[**Save**]ペインでもう一度[**Save**]をクリックします。これにより、このパイプラインに基づいてビルドが自動的にトリガーされます。
-1. Azure DevOps ポータルの左側の垂直ナビゲーションペインの[**Pipelines**]セクションで、[**Pipelines**]をクリックします。
-1. **Pipelines**ペインの**Recent**タブで、**PartsUnlimited**エントリをクリックし、**PartsUnlimited**ペインの**Runs**タブで、最新の実行を選択します。[**Summary**]ペインで、一番下までスクロールし、[**Jobs**]セクションで[**Phase 1**]をクリックして、正常に完了するまでジョブを監視します。
+    ```yaml
+    name: az400m05l05a-pool
+    demands:
+    - agent.name -equals az400m05-vm0
+    ```
+1. `Task: NugetInstaller@0` タスクで 「**設定 (グレーでタスクの上に表示されているリンク)**」 をクリックし、**「詳細」 > 「NuGet バージョン」 > 「4.0.0」** を変更して 「**追加**」 をクリックします。 
+1.  **PartsUnlimited** 編集ペインのペインの右上隅にある 「**保存**」 をクリックし、「**保存**」 ペインでもう一度 「**保存**」 をクリックします。これにより、このパイプラインに基づいてビルドが自動的にトリガーされます。 
+1.  Azure DevOps ポータルの左側の垂直ナビゲーション ペインの 「**パイプライン**」 セクションで、「**パイプライン**」 をクリックします。
+1.  「**パイプライン**」 ペインの 「**最近**」 タブで、「**PartsUnlimited**」 エントリをクリックし、「**PartsUnlimited**」 ペインの 「**実行**」 タブで最新の実行を選択し、実行の 「**概要**」 ペインで一番下までスクロールし、「**ジョブ**」 セクションで 「**フェーズ 1**」 をクリックし、正常に完了するまでジョブを監視します。 
 
 #### レビュー
 
-このラボでは、従来のパイプラインを YAML ベースのパイプラインに変換する方法と、セルフホストエージェントを実装して使用する方法を学習しました。
+このラボでは、従来のパイプラインを YAML ベースのパイプラインに変換する方法と、セルフホスティド エージェントを実装して使用する方法を学習しました。

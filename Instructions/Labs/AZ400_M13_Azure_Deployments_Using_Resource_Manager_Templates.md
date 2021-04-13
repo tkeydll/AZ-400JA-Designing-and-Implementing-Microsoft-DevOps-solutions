@@ -1,4 +1,4 @@
----
+﻿---
 lab:
     title: 'ラボ: Resource Manager テンプレートを使用した Azure デプロイ'
     module: 'モジュール 13: Azure ツールを使用したインフラストラクチャと構成の管理'
@@ -15,7 +15,7 @@ lab:
 
 このラボを完了すると、次のことができるようになります。
 
-- Resource Manager テンプレートを作成する
+- Resource Manager テンプレートの作成
 - ストレージ リソース向けのリンク済みテンプレートを作成する
 - リンク済みテンプレートを Azure Blob Storage にアップロードして SAS トークンを生成する
 - メイン テンプレートを変更して、リンク済みテンプレートを呼び出す
@@ -42,7 +42,7 @@ lab:
 このラボで使用するアプリケーションを特定:
     
 -   Microsoft Edge
--   [Visual Studio Code](https://code.visualstudio.com/). このラボでは前提条件の一部としてインストールされます。 
+-   [Visual Studio Code](https://code.visualstudio.com/).このラボでは前提条件の一部としてインストールされます。 
 
 #### Azure サブスクリプションの準備
 
@@ -77,7 +77,7 @@ lab:
     - **C:\\templates** 
     - **C:\\templates\\storage** 
 
-1.  azuredeploy.json テンプレートのある Visual Studio Code ウィンドウに戻り、「**ファイル**」 トップ レベル メニューをクリックします。ドロップダウン メニューで 「**名前を付けて保存**」 をクリックし、新しく作成されたローカル フォルダーでテンプレートを **azuredeploy.json** として保存します。
+1.  azuredeploy.json テンプレートのある Visual Studio Code ウィンドウに戻り、「**ファイル**」 トップ レベル メニューをクリックします。ドロップダウン メニューで 「**名前を付けて保存**」 をクリックし、新しく作成されたローカル フォルダー **C:\\templates** でテンプレートを **azuredeploy.json** として保存します。
 1.  テンプレートをレビューし、その構造をよりよく把握します。テンプレートには 5 種類のリソースが含まれています。
 
     - Microsoft.Storage/storageAccounts
@@ -101,8 +101,8 @@ lab:
       {
         "type": "Microsoft.Storage/storageAccounts",
         "name": "[variables('storageAccountName')]",
-        "location": "[parameters('location')]",
-        "apiVersion": "2018-07-01",
+        "location": [parameters('location')]",
+        "apiVersion": "2018/07/01",
         "sku": {
            "name": "Standard_LRS"
         },
@@ -119,8 +119,8 @@ lab:
       {
         "type": "Microsoft.Storage/storageAccounts",
         "name": "[parameters('storageAccountName')]",
-        "location": "[parameters('location')]",
-        "apiVersion": "2018-07-01",
+        "location": [parameters('location')]",
+        "apiVersion": "2018/07/01",
         "sku": {
            "name": "Standard_LRS"
         },
@@ -178,19 +178,19 @@ lab:
 
 1. 最後に、テンプレート スキーマのバージョンを 2015-01-01 から 2019-04-01 に更新します。テンプレート定義ファイルの最初の数行を以下のように更新してください。
 
-```json
-    {
-      "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-      "contentVersion": "1.0.0.0",
-      "parameters": {
-        "storageAccountName":{
-          "type": "string",
-          "metadata": {
-            "description": "Azure Storage account name."
-          }
-```
+    ```json
+        {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "storageAccountName":{
+              "type": "string",
+              "metadata": {
+                "description": "Azure Storage account name."
+              }
+    ```
 
-1.  Storage.json テンプレートを保存します。リンク済みストレージ テンプレートは次のようになります:
+1. Storage.json テンプレートを保存します。リンク済みストレージ テンプレートは次のようになります:
 
     ```json
     {
@@ -215,8 +215,8 @@ lab:
         {
           "type": "Microsoft.Storage/storageAccounts",
           "name": "[parameters('storageAccountName')]",
-          "apiVersion": "2016-01-01",
-          "location": "[parameters('location')]",
+          "apiVersion": "2016/01/01",
+          "location": [parameters('location')]",
           "sku": {
             "name": "Standard_LRS"
           },
@@ -247,19 +247,20 @@ lab:
 
 1.  **Bash** や **PowerShell** のどちらかを選択するためのプロンプトが表示されたら、**PowerShell** を選択します。 
 
-    > **注**: **Cloud Shell** を初めて起動し、「**ストレージがマウントされていません**」というメッセージが表示された場合は、このラボで使用しているサブスクリプションを選択し、「**ストレージの作成**」を選択します。 
+    > ** 注**: **Cloud Shell** を初めて起動し、「**ストレージがマウントされていません**」というメッセージが表示された場合は、このラボで使用しているサブスクリプションを選択し、「**ストレージの作成**」を選択します。 
 
-1.  Cloud Shell ペインの PowerShell セッションから、以下を実行して BLOB ストレージ コンテナーを作成し、前のタスクで作成したテンプレート ファイルをアップロードします。その後、メイン テンプレートで参照してリンク済みテンプレートにアクセスできるように SAS トークンを生成します。
-
-    > **注**: スクリプトで生成された最終的な出力を必ず記録してください。これは、ラボの後半で必要になります。
+1.  Cloud Shell ペインの **PowerShell** セッションから、以下を実行して BLOB ストレージ コンテナーを作成し、前のタスクで作成したテンプレート ファイルをアップロードします。その後、メイン テンプレートで参照してリンク済みテンプレートにアクセスできるように SAS トークンを生成します。
+1.  まず、以下のコードのラインをコピーして貼り付け、デプロイ先の Azure リージョンの値を設定します。プロンプトに示されているように、コマンドは入力を待ちます。
 
     ```powershell
     # Azure VM のプロビジョニングが可能で最も近い Azure の名前を提供
     $location = Read-Host -Prompt 'Enter the name of Azure region (i.e. centralus)'
+    ```
+1. 次に、以下のコードをコピーして同じ Cloud Shell セッションに貼り付け、BLOB ストレージ コンテナーを作成し、前のタスクで作成したテンプレート ファイルをアップロードします。その後、メイン テンプレートで参照してリンク済みテンプレートにアクセスできるように SAS トークンを生成します。
 
+    ```powershell
     # これは Azure ストレージ アカウントに名前を割り当てるために使われるランダムな文字列
     $suffix = Get-Random
-  
     $resourceGroupName = 'az400m13l01-RG'
     $storageAccountName = 'az400m13blob' + $suffix
 
@@ -309,15 +310,16 @@ lab:
     "Resource Group Name: $resourceGroupName"
     "Linked template URI with SAS token: $templateURI"
     ```
+    > ** 注**: スクリプトで生成された最終的な出力を必ず記録してください。これは、ラボの後半で必要になります。
+    
+    > ** 注**: 出力値は以下のようになるはずです:
 
-    > **注**: 出力値は以下のようになるはずです:
-
-    ```powershell
+    ```
     Resource Group Name: az400m13l01-RG
     Linked template URI with SAS token: https://az400m13blob1677205310.blob.core.windows.net/linktempblobcntr/storage.json?sv=2018-03-28&sr=b&sig=B4hDLt9rFaWHZXToJlMwMjejAQGT7x0INdDR9bHBQnI%3D&se=2020-11-23T21%3A54%3A53Z&sp=r
     ```
 
-    > **注**: セキュリティのレベルを強化する必要がある場合は、メイン テンプレートのデプロイ中に SAS トークンをダイナミックに生成し、より短い有効期間を SAS トークンに割り当てることができます。
+    > ** 注**: セキュリティのレベルを強化する必要がある場合は、メイン テンプレートのデプロイ中に SAS トークンをダイナミックに生成し、より短い有効期間を SAS トークンに割り当てることができます。
 
 1.  「Cloud Shell」 ペインを閉じます。
 
@@ -334,8 +336,8 @@ lab:
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
-      "location": "[parameters('location')]",
-      "apiVersion": "2018-07-01",
+      "location": [parameters('location')]",
+      "apiVersion": "2018/07/01",
       "sku": {
         "name": "Standard_LRS"
       },
@@ -352,9 +354,9 @@ lab:
     {
       "name": "linkedTemplate",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2018-05-01",
+      "apiVersion": "2018/05/01",
       "properties": {
-          "mode": "Incremental",
+          "モード": "Incremental",
           "templateLink": {
               "uri":"<linked_template_URI_with_SAS_token>"
           },
@@ -428,10 +430,11 @@ lab:
 > **注**: Azure Cloud Shell を使用するには、メイン デプロイ テンプレート「azuredeploy.json」を Cloud Shell のホーム ディレクトリにアップロードします。また、リンク済みテンプレートをアップロードした場合と同様に、Azure Blob Storage にアップロードし、ローカル ファイルのシステム パスではなく URI を使用して参照することもできます。
 
 1.  ラボのコンピューターで、Azure Portal が表示されている Web ブラウザーで 「**Cloud Shell**」 アイコンをクリックして Cloud Shell を開きます。 
+    > **注**: この演習で以前に使用した PowerShell セッションがまだアクティブな場合は、Bash に切り替えなくてもこれを使用できます (次のステップ)。Cloud Shell の PowerShell と Bash セッションの両方で以下のステップを実行できます。新しい Cloud Shell セッションを開く場合は手順に従ってください。 
 1.  Cloud Shell ペインで 「**PowerShell**」 をクリックします。ドロップダウン メニューで 「**バッシュ**」 をクリックし、指示されたら 「**確認**」 をクリックします。 
 1.  Cloud Shell ペインで、「**ファイルのアップロード / ダウンロード**」 アイコンをクリックし、ドロップダウン メニューで 「**アップロード**」 をクリックします。 
 1.  「**開く**」 ダイアログ ボックスで、**C:\\templates\\azuredeploy.json** に移動してこれを選択し、「**開く**」 をクリックします。
-1.  Cloud Shell ペインのバッシュ セッションから以下を実行し、新しくアップロードされたテンプレートを使用してデプロイを実行します。
+1.  Cloud Shell ペインの **Bash** セッションから以下を実行し、新しくアップロードされたテンプレートを使用してデプロイを実行します。
 
     ```bash
     az deployment group create --name az400m13l01deployment --resource-group az400m13l01-RG --template-file azuredeploy.json
@@ -445,15 +448,15 @@ lab:
     - 複数の Azure サブスクリプションがある場合は、リソース グループがデプロイされている適切な場所にサブスクリプションのコンテキストが設定されていることを確認してください。
     - 指定した URI を介してリンク済みテンプレートにアクセスできることを確認します。
 
-    > **注**: 次のステップでは、メイン デプロイ テンプレートで残りのリソース定義 (ネットワークや仮想マシンのリソース定義など) をモジュラー化できます。 
+> **注**: 次のステップでは、メイン デプロイ テンプレートで残りのリソース定義 (ネットワークや仮想マシンのリソース定義など) をモジュラー化できます。 
 
-    > **注**: デプロイされたリソースを使用する予定がない場合は、関連した料金が発生しないようにリソースを削除してください。リソース グループ「**az400m13l01-RG**」を削除するだけです。
+> **注**: デプロイされたリソースを使用する予定がない場合は、関連した料金が発生しないようにリソースを削除してください。リソース グループ「**az400m13l01-RG**」を削除するだけです。
 
 ### 演習 2: Azure ラボ リソースを削除する
 
 この演習では、このラボでプロビジョニングした Azure リソースを削除し、予期しない料金を排除します。 
 
-> **注**: 新しく作成した Azure リソースのうち、使用しないリソースは必ず削除してください。使用しないリソースを削除しないと、予期しないコストが発生する場合があります。
+> ** 注**: 新しく作成した Azure リソースのうち、使用しないリソースは必ず削除してください。使用しないリソースを削除しないと、予期しないコストが発生する場合があります。
 
 #### タスク 1: Azure ラボ リソースを削除する
 
@@ -462,17 +465,17 @@ lab:
 1.  Azure portal で、**Cloud Shell** ウィンドウ内で **Bash** シェル セッションを開きます。
 1.  次のコマンドを実行して、このモジュールのラボ全体で作成したすべてのリソース グループのリストを表示します。
 
-    ```sh
-    az group list --query "[?starts_with(name,'az400m13l01-RG')].name" --output tsv
+    ```bash
+    group list --query "[?starts_with(name,'az400m13l01')].name" --output tsv
     ```
 
 1.  次のコマンドを実行して、このモジュールのラボ全体で作成したすべてのリソース グループのリストを削除します。
 
-    ```sh
+    ```bash
     az group list --query "[?starts_with(name,'az400m13l01-RG')].[name]" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
     ```
 
-    > **注**: コマンドは非同期に実行されるので (--nowait パラメーターで決定される)、同じ Bash セッション内ですぐに別の Azure CLI コマンドを実行できますが、リソース グループが実際に削除されるまでに数分かかります。
+    > ** 注**: コマンドは非同期に実行されるので (--nowait パラメーターで決定される)、同じ Bash セッション内ですぐに別の Azure CLI コマンドを実行できますが、リソース グループが実際に削除されるまでに数分かかります。
 
 ## レビュー
 
