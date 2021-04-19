@@ -186,7 +186,7 @@ lab:
       jobs:
       - job: Deploy
         pool:
-          vmImage: ’vs2017-win2016’
+          vmImage: 'vs2017-win2016'
         steps:
     ```
 
@@ -247,7 +247,7 @@ lab:
       jobs:
       - job: Build
         pool:
-            vmImage: ’vs2017-win2016’
+            vmImage: 'vs2017-win2016'
 
         variables:
             solution: '**/*.sln'
@@ -283,7 +283,7 @@ lab:
       jobs:
       - job: Deploy
         pool:
-            vmImage: ’vs2017-win2016’
+            vmImage: 'vs2017-win2016'
         steps:
         - task: DownloadBuildArtifacts@0
           inputs:
@@ -326,7 +326,7 @@ lab:
 
 この演習では、このラボでプロビジョニングした Azure リソースを削除し、予期しない料金を排除します。 
 
-> ** 注**: 新しく作成した Azure リソースのうち、使用しないリソースは必ず削除してください。使用しないリソースを削除しないと、予期しないコストが発生する場合があります。
+> **注**: 新しく作成した Azure リソースのうち、使用しないリソースは必ず削除してください。使用しないリソースを削除しないと、予期しないコストが発生する場合があります。
 
 #### タスク 1: Azure ラボ リソースを削除する
 
@@ -336,7 +336,7 @@ lab:
 1.  次のコマンドを実行して、このモジュールのラボ全体で作成したすべてのリソース グループのリストを表示します。
 
     ```sh
-    group list --query "[?starts_with(name,'az400m11l01')].name" --output tsv
+    az group list --query "[?starts_with(name,'az400m11l01-RG')].name" --output tsv
     ```
 
 1.  次のコマンドを実行して、このモジュールのラボ全体で作成したすべてのリソース グループのリストを削除します。
@@ -345,7 +345,7 @@ lab:
     az group list --query "[?starts_with(name,'az400m11l01-RG')].[name]" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
     ```
 
-    > ** 注**: コマンドは非同期に実行されるので (--nowait パラメーターで決定される)、同じ Bash セッション内ですぐに別の Azure CLI コマンドを実行できますが、リソース グループが実際に削除されるまでに数分かかります。
+    > **注**: コマンドは非同期に実行されるので (--nowait パラメーターで決定される)、同じ Bash セッション内ですぐに別の Azure CLI コマンドを実行できますが、リソース グループが実際に削除されるまでに数分かかります。
 
 ## レビュー
 

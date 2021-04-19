@@ -101,8 +101,8 @@ lab:
       {
         "type": "Microsoft.Storage/storageAccounts",
         "name": "[variables('storageAccountName')]",
-        "location": [parameters('location')]",
-        "apiVersion": "2018/07/01",
+        "location": "[parameters('location')]",
+        "apiVersion": "2018-07-01",
         "sku": {
            "name": "Standard_LRS"
         },
@@ -119,8 +119,8 @@ lab:
       {
         "type": "Microsoft.Storage/storageAccounts",
         "name": "[parameters('storageAccountName')]",
-        "location": [parameters('location')]",
-        "apiVersion": "2018/07/01",
+        "location": "[parameters('location')]",
+        "apiVersion": "2018-07-01",
         "sku": {
            "name": "Standard_LRS"
         },
@@ -137,7 +137,7 @@ lab:
       "storageAccountName": "[concat('bootdiags', uniquestring(resourceGroup().id))]",
       "nicName": "myVMNic",
       "addressPrefix": "10.0.0.0/16",
-      "subnetName": "サブネット",
+      "subnetName": "Subnet",
       "subnetPrefix": "10.0.0.0/24",
       "virtualNetworkName": "MyVNET",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
@@ -215,8 +215,8 @@ lab:
         {
           "type": "Microsoft.Storage/storageAccounts",
           "name": "[parameters('storageAccountName')]",
-          "apiVersion": "2016/01/01",
-          "location": [parameters('location')]",
+          "apiVersion": "2016-01-01",
+          "location": "[parameters('location')]",
           "sku": {
             "name": "Standard_LRS"
           },
@@ -247,7 +247,7 @@ lab:
 
 1.  **Bash** や **PowerShell** のどちらかを選択するためのプロンプトが表示されたら、**PowerShell** を選択します。 
 
-    > ** 注**: **Cloud Shell** を初めて起動し、「**ストレージがマウントされていません**」というメッセージが表示された場合は、このラボで使用しているサブスクリプションを選択し、「**ストレージの作成**」を選択します。 
+    > **注**: **Cloud Shell** を初めて起動し、「**ストレージがマウントされていません**」というメッセージが表示された場合は、このラボで使用しているサブスクリプションを選択し、「**ストレージの作成**」を選択します。 
 
 1.  Cloud Shell ペインの **PowerShell** セッションから、以下を実行して BLOB ストレージ コンテナーを作成し、前のタスクで作成したテンプレート ファイルをアップロードします。その後、メイン テンプレートで参照してリンク済みテンプレートにアクセスできるように SAS トークンを生成します。
 1.  まず、以下のコードのラインをコピーして貼り付け、デプロイ先の Azure リージョンの値を設定します。プロンプトに示されているように、コマンドは入力を待ちます。
@@ -310,16 +310,16 @@ lab:
     "Resource Group Name: $resourceGroupName"
     "Linked template URI with SAS token: $templateURI"
     ```
-    > ** 注**: スクリプトで生成された最終的な出力を必ず記録してください。これは、ラボの後半で必要になります。
+    > **注**: スクリプトで生成された最終的な出力を必ず記録してください。これは、ラボの後半で必要になります。
     
-    > ** 注**: 出力値は以下のようになるはずです:
+    > **注**: 出力値は以下のようになるはずです:
 
     ```
     Resource Group Name: az400m13l01-RG
     Linked template URI with SAS token: https://az400m13blob1677205310.blob.core.windows.net/linktempblobcntr/storage.json?sv=2018-03-28&sr=b&sig=B4hDLt9rFaWHZXToJlMwMjejAQGT7x0INdDR9bHBQnI%3D&se=2020-11-23T21%3A54%3A53Z&sp=r
     ```
 
-    > ** 注**: セキュリティのレベルを強化する必要がある場合は、メイン テンプレートのデプロイ中に SAS トークンをダイナミックに生成し、より短い有効期間を SAS トークンに割り当てることができます。
+    > **注**: セキュリティのレベルを強化する必要がある場合は、メイン テンプレートのデプロイ中に SAS トークンをダイナミックに生成し、より短い有効期間を SAS トークンに割り当てることができます。
 
 1.  「Cloud Shell」 ペインを閉じます。
 
@@ -336,8 +336,8 @@ lab:
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
-      "location": [parameters('location')]",
-      "apiVersion": "2018/07/01",
+      "location": "[parameters('location')]",
+      "apiVersion": "2018-07-01",
       "sku": {
         "name": "Standard_LRS"
       },
@@ -354,9 +354,9 @@ lab:
     {
       "name": "linkedTemplate",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2018/05/01",
+      "apiVersion": "2018-05-01",
       "properties": {
-          "モード": "Incremental",
+          "mode": "Incremental",
           "templateLink": {
               "uri":"<linked_template_URI_with_SAS_token>"
           },
@@ -456,7 +456,7 @@ lab:
 
 この演習では、このラボでプロビジョニングした Azure リソースを削除し、予期しない料金を排除します。 
 
-> ** 注**: 新しく作成した Azure リソースのうち、使用しないリソースは必ず削除してください。使用しないリソースを削除しないと、予期しないコストが発生する場合があります。
+> **注**: 新しく作成した Azure リソースのうち、使用しないリソースは必ず削除してください。使用しないリソースを削除しないと、予期しないコストが発生する場合があります。
 
 #### タスク 1: Azure ラボ リソースを削除する
 
@@ -466,7 +466,7 @@ lab:
 1.  次のコマンドを実行して、このモジュールのラボ全体で作成したすべてのリソース グループのリストを表示します。
 
     ```bash
-    group list --query "[?starts_with(name,'az400m13l01')].name" --output tsv
+    az group list --query "[?starts_with(name,'az400m13l01-RG')].name" --output tsv
     ```
 
 1.  次のコマンドを実行して、このモジュールのラボ全体で作成したすべてのリソース グループのリストを削除します。
@@ -475,7 +475,7 @@ lab:
     az group list --query "[?starts_with(name,'az400m13l01-RG')].[name]" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
     ```
 
-    > ** 注**: コマンドは非同期に実行されるので (--nowait パラメーターで決定される)、同じ Bash セッション内ですぐに別の Azure CLI コマンドを実行できますが、リソース グループが実際に削除されるまでに数分かかります。
+    > **注**: コマンドは非同期に実行されるので (--nowait パラメーターで決定される)、同じ Bash セッション内ですぐに別の Azure CLI コマンドを実行できますが、リソース グループが実際に削除されるまでに数分かかります。
 
 ## レビュー
 

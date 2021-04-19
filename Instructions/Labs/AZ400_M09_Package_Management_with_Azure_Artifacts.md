@@ -1,6 +1,6 @@
 ﻿---
 lab:
-    title: 'ラボ: Azure Artifacts を使用したパッケージ管理'
+    title: 'ラボ: Azure Artifacts によるパッケージ管理'
     module: 'モジュール 9: 依存関係管理戦略の設計と実装'
 ---
 
@@ -163,7 +163,7 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
 1.  **Visual Studio** ウィンドウに切り替えます。「**ソリューション エクスプローラー**」 ペインで、**PartsUnlimited.Shared** プロジェクト ノードを右クリックし、右クリック メニューで 「**ファイル エクスプローラーでフォルダーを開く**」 を選択します。
 1.  「ファイル エクスプローラー」 ウィンドウ内で、ダウンロードした **nuget.exe** ファイルを**ダウンロード** フォルダーから **csproj** ファイルを含むフォルダーに移動します。
 1.  同じファイル エクスプローラー ウィンドウで、「**ファイル**」 メニュー ヘッダーを選択し、ドロップダウン メニューで 「**Windows PowerShell を開く**」 を選択し、カスケード メニューで 「**管理者として Windows PowerShell を開く**」 をクリックします。 
-1.  **管理者: **「**Windows PowerShell**」 ウィンドウで、次のコマンドを実行して、プロジェクトから **nupkg** ファイルを作成します。 
+1.  **管理者: 「Windows PowerShell」** ウィンドウで、次のコマンドを実行して、プロジェクトから **nupkg** ファイルを作成します。 
 
     > **注**: これは、デプロイ用に NuGet ビットをパッケージ化するためのショートカットです。NuGet は高度にカスタマイズ可能です。詳細については、[NuGet パッケージの作成ページ](https://docs.microsoft.com/ja-jp/nuget/create-packages/overview-and-workflowhttps:/docs.microsoft.com/ja-jp/nuget/create-packages/overview-and-workflow)を参照してください。
 
@@ -215,7 +215,7 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
 
 1.  **PartsUnlimited.Shared** プロジェクト (NuGet ソース プロジェクトを含む) が開いている **Visual Studio** ウィンドウに切り替えます。
 1.  「**ソリューション エクスプローラー**」 ペインで、**PartsUnlimited.Shared** プロジェクト ノードを右クリックし、右クリック メニューで 「**追加**」 を選択し、カスケード メニューで 「**新しい項目**」 を選択します。
-1.  「**新しい項目の追加 - PartsUnlimitedShared**」 ダイアログ ボックスの **Visual C# 項目**のリストで、「**クラス**」 テンプレートが選択されていることを確認し、ダイアログ ボックスの下部にある 「**名前**」 テキストボックスに「**"TaxService.cs"**」と入力し、「**追加**」をクリックしてクラスを追加します。 
+1.  「**新しい項目の追加 - PartsUnlimitedShared**」 ダイアログ ボックスの **Visual C# 項目**のリストで、「**クラス**」 テンプレートが選択されていることを確認し、ダイアログ ボックスの下部にある 「**名前**」 テキストボックスに「**TaxService.cs**」と入力し、「**追加**」をクリックしてクラスを追加します。 
 
     > **注**: 他のチームが NuGet パッケージを簡単に操作できるように、税計算がこの共有クラスに統合され、一元管理されるように見せかけます。
 

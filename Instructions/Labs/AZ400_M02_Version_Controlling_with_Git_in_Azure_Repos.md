@@ -1,6 +1,6 @@
 ---
 lab:
-  title: 'ラボ: Azure Repos での Git によるバージョン管理'
+  title: 'ラボ: Azure Repos の Git によるバージョン管理'
   module: 'モジュール 2: ソース管理の開始'
 ---
 
@@ -82,7 +82,7 @@ Git は、新しいプロジェクトの既定のバージョン管理プロバ�
 
 このタスクでは、Git および Visual Studio Code をインストールおよび構成します。これには、Azure DevOps との通信に使用される Git 資格情報を安全に保存するための Git 資格情報ヘルパーの構成も含まれます。これらの前提条件をすでに実装している場合は、次のタスクに直接進むことができます。
 
-1.  Git 2.29.2 以降をまだインストールしていない場合は、Web ブラウザーを起動し、「Git for Windows のダウンロード ページ」(https://gitforwindows.org/)に移動してダウンロードし、インストールします。
+1.  Git 2.29.2 以降をまだインストールしていない場合は、Web ブラウザーを起動し、[Git for Windows のダウンロード ページ](https://gitforwindows.org/)に移動してダウンロードし、インストールします。
 1.  Visual Studio Code をまだインストールしていない場合は、Web ブラウザー ウィンドウから [Visual Studio Code ダウンロード ページ](https://code.visualstudio.com/)に移動し、ダウンロードしてインストールします。
 1.  Visual Studio C# 拡張機能をまだインストールしていない場合は、Web ブラウザー ウィンドウで、[C# 拡張機能のインストール ページ](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)に移動してインストールします。
 1.  ラボ コンピューターで、**Visual Studio Code** を開きます。

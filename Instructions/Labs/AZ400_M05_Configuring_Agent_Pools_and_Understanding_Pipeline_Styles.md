@@ -80,7 +80,7 @@ Windows 10 デスクトップでタスク バーを探します。タスク バ�
 
 1.  **エージェント プールの構成とパイプライン スタイルの理解**プロジェクトが開いた状態で Azure DevOps ポータルを表示している Web ブラウザーから、左側の垂直ナビゲーション ペインで 「**パイプライン**」 をクリックします。 
 1.  「**パイプライン**」 ペインの 「**最近**」 タブで、「**新しいパイプライン**」 をクリックします。
-1.  「**コードはどこにありますか?**」 ペインで 「**Azure Repos Git **」 をクリックします。 
+1.  「**コードはどこにありますか?**」 ペインで 「**Azure Repos Git**」 をクリックします。 
 1.  「**リポジトリの選択**」 ペインで 「**PartsUnlimited**」 をクリックします。
 1.  「**パイプラインの構成**」 ペインで、「**スターター パイプライン**」 をクリックします。
 1.  「**パイプライン YAML の確認**」 ペインでサンプル パイプラインを確認し、「**保存して実行**」 ボタンの横にある下向きのキャレット記号をクリックして 「**保存**」 をクリックし、「**保存**」 ペインで 「**保存**」 をクリックします。
@@ -129,7 +129,7 @@ Windows 10 デスクトップでタスク バーを探します。タスク バ�
     jobs:
     - job: Phase_1
       displayName: Phase 1
-      cancelTimeoutInMinutes：11
+      cancelTimeoutInMinutes: 1
       pool:
         vmImage: vs2017-win2016
       steps:
@@ -151,12 +151,12 @@ Windows 10 デスクトップでタスク バーを探します。タスク バ�
         name: VSTest_3
         displayName: Test Assemblies
         inputs:
-          testAssembly：'**\$(BuildConfiguration)\*test*.dll;-:**\obj\**'
+          testAssembly: '**\$(BuildConfiguration)\*test*.dll;-:**\obj\**'
           codeCoverageEnabled: true
           vsTestVersion: latest
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
-      - task: displayName：2@のCopyFiles
+      - task: CopyFiles@2
         name: CopyFiles1
         displayName: Copy Files
         inputs:
@@ -233,7 +233,7 @@ Windows 10 デスクトップでタスク バーを探します。タスク バ�
 
     | 設定 | 値 |
     | ------- | ----- |
-    | サーバーの URL を入力する | **https://dev.azure.com/`<organization_name>`** の形式でのAzure DevOps 組織の URL。ここで、`<organization_name>` は、Azure DevOps 組織の名前を表します |
+    | サーバーの URL を入力する | **https://dev.azure.com/ `<organization_name>`** の形式でのAzure DevOps 組織の URL。ここで、`<organization_name>` は、Azure DevOps 組織の名前を表します |
     | 認証タイプを入力する (PAT の場合は Enter 押します) | **Enter** |
     | パーソナル アクセス トークンを入力する | このタスクの前半で記録したアクセス トークン |
     | エージェント・プールを入力する (デフォルトで Enter を押します) | **az400m05l05a-pool** |
