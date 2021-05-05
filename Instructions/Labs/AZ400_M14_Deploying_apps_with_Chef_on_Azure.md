@@ -304,14 +304,14 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
     > **注**: レシピは `apt` リソースを実行します。これにより、レシピは実行前に `apt-get update` コマンドを実行します。このコマンドでは、ローカル パッケージが最新バージョンであることを確認します:
 
     ```chef
-     	# Runs apt-get update
+     	# apt-get update を実行する
      	include_recipe "apt"
     ```
 
     > **注**: 次に、`apt_repository` リソースを追加して、**OpenJDK** リポジトリが apt リポジトリの一部であり、最新の状態であることを確認します:
 
     ```chef
- 	# Add the Open JDK apt repo
+ 	# Open JDK apt repo を追加する
  	apt_repository 'openJDK' do
  		uri 'ppa:openjdk-r/ppa'
  		distribution 'trusty'
@@ -321,7 +321,7 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
     > **注**: 次に、`apt-package` レシピを使用して、**OpenJDK** と **OpenJRE** がインストールされていることを確認します。使用したくないレガシー パッケージに応じて、ヘッドレス バージョンをフル バージョンとして使います。
 
     ```chef
- 	# Install JDK and JRE
+ 	# JDK および JRE をインストールする
  	apt_package 'openjdk-8-jdk-headless' do
  		action :install
  	end
@@ -334,7 +334,7 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
     > **注**: 次に、`JAVA_HOME` と `PATH` 環境変数を設定して OpenJDK を参照します:
 
     ```chef
- 	# Set Java environment variables
+ 	# Java 環境変数を設定する
  	ENV['JAVA_HOME'] = "/usr/lib/jvm/java-8-openjdk-amd64"
      	ENV['PATH'] = "#{ENV['PATH']}:/usr/lib/jvm/java-8-openjdk-amd64/bin"
     ```
@@ -342,12 +342,12 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
     > **注**: 次に、MongoDB データベース エンジンと Tomcat Web サーバーをインストールします:
 
     ```chef
- 	# Install MongoDB
+ 	# MongoDB をインストールする
  	apt_package 'mongodb' do
  		action :install
  	end
 
- 	# Install Tomcat 7
+ 	# Tomcat 7 をインストールする
  	apt_package 'tomcat7' do
  		action :install
      	end
@@ -356,7 +356,7 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
     > **注**: この時点で、依存関係はすべてインストールされています。これでアプリケーションの構成を始められます。まず、MongoDB データベースに何らかのベースライン データがあることを確認する必要があります。`remote_file` リソースは、指定された場所にファイルをダウンロードします。このタスクは冪等なので、サーバー上のファイルのチェックサムがローカル ファイルと同じであれば、アクションは実行されません。`notifies` コマンドも使用します。これにより、リソースの実行時にファイルの新しいバージョンがある場合、指定されたリソースに通知が送られ、新しいファイルを実行するよう促します。
 
     ```chef
- 	# Load MongoDB data
+ 	# MongoDB データをロードする
  	remote_file 'mongodb_data' do
  		source 'https://github.com/Microsoft/PartsUnlimitedMRP/tree/master/deploy/MongoRecords.js'
  		path './MongoRecords.js'
@@ -380,7 +380,7 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
     > **注**: `#{node['tomcat']['mrp_port']}` と呼ばれる属性を参照しています。この値はまだ定義されていませんが、次のタスクで定義します。属性を使用すれば、変数を設定できるため、単一のサーバーのひとつのポート、および別のサーバーの異なるポートで PU MRP アプリケーションをデプロイできます。ポートが変わる場合は、`notifies` を使用してサービス再起動を呼び出します。
 
     ```chef
- 	# Set tomcat port
+ 	# tomcat ポートを設定する
  	script 'tomcat_port' do
  		interpreter "bash"
  		code "sed -i 's/Connector port=\".*\" protocol=\"HTTP\\/1.1\"$/Connector port=\"#{node['tomcat']['mrp_port']}\" protocol=\"HTTP\\/1.1\"/g' /etc/tomcat7/server.xml"
@@ -392,7 +392,7 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
     > **注**: これで PU MRP アプリケーションをダウンロードして、Tomcat での実行を開始できます。新しいバージョンを取得した場合は、Tomcat サービスに再起動するよう合図します。
 
     ```chef
- 	# Install the PU MRP app, restart the Tomcat service if necessary
+ 	# PU MRP アプリをインストールし、Tomcat サービスを必要に応じて再起動する
  	remote_file 'mrp_app' do
  		source 'https://github.com/Microsoft/PartsUnlimitedMRP/tree/master/builds/mrp.war'
  		action :create
@@ -403,7 +403,7 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
     > **注**: Tomcat サービスで希望する状態を定義できます。この特定のケースでは、サービスは実行中でなくてはなりません。これによりスクリプトは Tomcat サービスの状態をチェックし、必要であれば起動します。
 
     ```chef
- 	# Ensure Tomcat is running
+ 	# Tomcat が実行していることを確認する
  	service 'tomcat7' do
  		action :start
  	end
@@ -419,16 +419,16 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
  		notifies :run, "script[stop_ordering_service]", :immediately
  	end
 
- 	# Kill the ordering service
+ 	# 通常サービスを中止する
  	script 'stop_ordering_service' do
  		interpreter "bash"
- 	# Only run when notifed
+ 	# 通知した場合にのみ実行する
  		action :nothing
  		code "pkill -f ordering-service"
  		only_if "pgrep -f ordering-service"
  	end
 
- 	# Start the ordering service.
+ 	# サービスの注文を開始する。
  	script 'start_ordering_service' do
  		interpreter "bash"
  		code "/usr/lib/jvm/java-8-openjdk-amd64/bin/java -jar ordering-service-0.1.0.jar &"
@@ -456,7 +456,7 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
 
 この演習では、`knife` コマンドを使用してロールを作成します。ロールは、複数のサーバーに適用できるクックブックと属性のベースラインを定義します。
 
-> **注**: 詳細については、「Chef ドキュメント ページ Knife のロール」(https://docs.chef.io/knife_role.html)を参照してください。
+> **注**: 詳細については、[Chef ドキュメント ページ Knife のロール](https://docs.chef.io/knife_role.html)を参照してください。
 
 1.  「**管理者: Chef DK**」 PowerShell ウィンドウで以下を実行し、メモ帳で **knife.rb** ファイルを開きます:
 

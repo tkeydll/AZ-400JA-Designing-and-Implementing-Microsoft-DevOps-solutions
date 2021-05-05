@@ -675,13 +675,13 @@ https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.github
 1.  次のコマンドを実行して、このモジュールのラボ全体で作成したすべてのリソース グループのリストを表示します。
 
     ```sh
-    group list --query "「?starts_with(name,'az400m14l03a')」.name" --output tsv
+    az group list --query "[?starts_with(name,'az400m14l03a-RG')].name" --output tsv
     ```
 
 1.  次のコマンドを実行して、このモジュールのラボ全体で作成したすべてのリソース グループのリストを削除します。
 
     ```sh
-    az group list --query "「?starts_with(name,'az400m14l03a-RG')」.「name」" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
+    az group list --query "[?starts_with(name,'az400m14l03a-RG')].[name]" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
     ```
 
     > **注**: コマンドは非同期に実行されるので (--nowait パラメーターで決定される)、同じ Bash セッション内ですぐに別の Azure CLI コマンドを実行できますが、リソース グループが実際に削除されるまでに数分かかります。

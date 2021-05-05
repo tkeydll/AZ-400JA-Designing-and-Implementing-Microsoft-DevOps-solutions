@@ -1,7 +1,7 @@
 ---
 lab:
-  title: "ラボ: Azure Repos での Git によるバージョン管理"
-  module: "モジュール 2: ソース管理の開始"
+  title: 'ラボ: Azure Repos の Git によるバージョン管理'
+  module: 'モジュール 2: ソース管理の開始'
 ---
 
 # ラボ: Azure Repos の Git によるバージョン管理
@@ -82,7 +82,7 @@ Git は、新しいプロジェクトの既定のバージョン管理プロバ�
 
 このタスクでは、Git および Visual Studio Code をインストールおよび構成します。これには、Azure DevOps との通信に使用される Git 資格情報を安全に保存するための Git 資格情報ヘルパーの構成も含まれます。これらの前提条件をすでに実装している場合は、次のタスクに直接進むことができます。
 
-1.  Git 2.29.2 以降をまだインストールしていない場合は、Web ブラウザーを起動し、「Git for Windows のダウンロード ページ」(https://gitforwindows.org/)に移動してダウンロードし、インストールします。
+1.  Git 2.29.2 以降をまだインストールしていない場合は、Web ブラウザーを起動し、[Git for Windows のダウンロード ページ](https://gitforwindows.org/)に移動してダウンロードし、インストールします。
 1.  Visual Studio Code をまだインストールしていない場合は、Web ブラウザー ウィンドウから [Visual Studio Code ダウンロード ページ](https://code.visualstudio.com/)に移動し、ダウンロードしてインストールします。
 1.  Visual Studio C# 拡張機能をまだインストールしていない場合は、Web ブラウザー ウィンドウで、[C# 拡張機能のインストール ページ](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)に移動してインストールします。
 1.  ラボ コンピューターで、**Visual Studio Code** を開きます。
@@ -138,8 +138,7 @@ Git は、新しいプロジェクトの既定のバージョン管理プロバ�
 1.  「**Provide repository URL or pick a repository source**」 テキストボックスで、このタスクの前半でコピーしたリポジトリ クローン URL を貼り付け、**Enter** キーを押します。
 1.  「**Select Folder(フォルダーの選択)**」 ダイアログボックスで、C: ドライブに移動し、Git という名前の新しいフォルダーを作成して選択し、「**Select Repository Location(リポジトリの場所の選択)**」 をクリックします。
 1.  プロンプトが表示されたら、Azure DevOps アカウントにログインします。
-    > Password は、「**Clone Repository**」 パネルの「Generate Git Credentials」から取得可能です。
-1.  クローン作成プロセスが完了したら、右下にプロンプトが表示されたら、Visual Studio Code で 「**Open**」 をクリックして、複製されたリポジトリを開きます。
+1.  クローン作成プロセスが完了したら、プロンプトが表示されたら、Visual Studio Code で 「**開く**」 をクリックして、複製されたリポジトリを開きます。
 
     > **注**: プロジェクトのロードに関する問題に関して受け取る可能性のある警告は無視してかまいません。ソリューションはビルドに適した状態ではない可能性がありますが、Git での作業に重点を置くため、プロジェクトのビルドは必要ありません。
 

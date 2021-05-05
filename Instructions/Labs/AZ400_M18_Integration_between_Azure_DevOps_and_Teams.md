@@ -94,7 +94,7 @@ lab:
     > **注**: チームは、共通の目標を掲げて集まる人々のグループです。 
 
 1.  「**チームに参加、またはチームを作成**」 ペインで 「**チームを作成**」 をクリックします。
-1.  「**チームを作成**」 パネルで 「*初めから作成**」 をクリックします。「**チームの種類は何でしょうか?**」 パネルで 「**プライベート**」 をクリックします。
+1.  「**チームを作成**」 パネルで 「**初めから作成**」 をクリックします。「**チームの種類は何でしょうか?**」 パネルで 「**プライベート**」 をクリックします。
 1.  「**プライベート チームに関する簡単な詳細**」 パネルで 「**チームに名前を付ける**」 を 「**Tailwind Traders**」 に置き換えて 「**作成**」 をクリックします。
 1.  「**Tailwind Traders にメンバーを追加**」 パネルで 「**スキップ**」 をクリックします。
 
@@ -200,7 +200,7 @@ lab:
 1.  「**Azure Pipelines サインイン**」 ペインで 「**サインイン**」 をクリックします。
 1.  **サービス フック (読み取りと書き込み)**、**ビルド (実行のビルド)**、**リリース (読み取り、書き込み、実行、管理)**、**プロジェクトおよびチーム (読み取り)**、**ID ピッカー (読み取り)**、**Teams 統合**許可を与えるよう指示されたら、「**承諾**」 をクリックしてから 「**閉じる**」 をクリックします。
 
-    > **注**: これで `@azure pipelines subscribe 「pipeline url」` コマンドを実行して Azure DevOps パイプラインにサブスクライブできます。
+    > **注**: これで `@azure pipelines subscribe [pipeline url]` コマンドを実行して Azure DevOps パイプラインにサブスクライブできます。
 
 1.  ラボのコンピューターで、Azure DevOps ポータルの **Tailwind Traders** プロジェクトが表示されている Web ブラウザーに切り替え、Azure DevOps ポータルの一番左側にある垂直メニュー バーで 「**パイプライン**」 をクリックします。「**パイプライン**」 ペインで 「**Website-CI**」 エントリをクリックします。「**Website-CI**」 ペインの使用中に Web ブラウザー ウィンドウで URL をクリップボードにコピーします。
 
@@ -213,7 +213,7 @@ lab:
  
     > **注**: ビルド パイプラインで、チャネルは 「**実行ステージの状態変更**」 と 「**実行ステージは承認待ち**」 という通知にサブクライブします。
 
-1.  ラボのコンピューターで、Azure DevOps ポータルの **Tailwind Traders** プロジェクトが表示されている Web ブラウザーに切り替え、Azure DevOps ポータルの一番左側にある垂直メニュー バーで 「**パイプライン**」 をクリックします。「**パイプライン**」 セクションで 「**リリース**」 をクリックします。リリース一覧で 「**Website-CD*」 エントリをクリックします。「**Website-CD**」 エントリを選択し、Web ブラウザー ウィンドウで URL をクリップボードにコピーします。
+1.  ラボのコンピューターで、Azure DevOps ポータルの **Tailwind Traders** プロジェクトが表示されている Web ブラウザーに切り替え、Azure DevOps ポータルの一番左側にある垂直メニュー バーで 「**パイプライン**」 をクリックします。「**パイプライン**」 セクションで 「**リリース**」 をクリックします。リリース一覧で 「**Website-CD**」 エントリをクリックします。「**Website-CD**」 エントリを選択し、Web ブラウザー ウィンドウで URL をクリップボードにコピーします。
 
     > **注**: URL は、`https://dev.azure.com/<organization_name>/Tailwind%20Traders/_release?_a=releases&view=mine&definitionId=2` の形式になります。`<organization_name>` は、DevOps 組織の名前を示すプレースホルダーです。
 
@@ -288,7 +288,7 @@ lab:
     > **注**: Microsoft Teams と Azure DevOps の接続が完了したので、以下のような Microsoft Teams で開示できる他の種類の情報について検討します: 
 
     - [OneNote ノートブックを Teams に追加](https://support.office.com/ja-jp/article/Add-a-OneNote-notebook-to-Teams-0ec78cc3-ba3b-4279-a88e-aa40af9865c2)すると、「**スプリント企画会議**」や「**反省会**」といったミーティングのメモを維持できます。 
-    - [Azure DevOps を Power BI に接続](https://docs.microsoft.com/ja-jp/azure/devops/report/powerbi/?view=azure-devops) と 「Power BI タブを追加」(https://support.office.com/ja-jp/article/add-a-powerbi-tab-to-teams-708ce6fe-0318-40fa-80f5-e9174f841918)では、Azure DevOps または他のプロジェクト関連データからの詳細なレポートが表示されます。
+    - [Azure DevOps を Power BI に接続](https://docs.microsoft.com/ja-jp/azure/devops/report/powerbi/?view=azure-devops) と [Power BI タブを追加](https://support.office.com/ja-jp/article/add-a-powerbi-tab-to-teams-708ce6fe-0318-40fa-80f5-e9174f841918)では、Azure DevOps または他のプロジェクト関連データからの詳細なレポートが表示されます。
 
 ## レビュー
 

@@ -80,16 +80,16 @@ Azure DevOps では、「*技術的負債*」という言葉は戦術的な目�
 1.   ラボのコンピューターを使い、Azure DevOps ポータルが表示されている Web ブラウザー ウィンドウで Azure DevOps ページの右上コーナーにある 「**ユーザー設定**」 アイコンをクリックします。ドロップダウン メニューで 「**Personal Access Tokens**」 をクリックし、「**Personal Access Tokens**」 ペインで 「**New Token**」 をクリックします。
 1.   「**Create a new personal access token**」 ペインで 「**Show All Scopes**」 リンクをクリックし、以下の設定を指定します。「**Create**」 をクリックします (他はすべて、既定値のままにします):
 
-| 設定 | 値 |
-| --- | --- |
-| 名前 | **SonarCloud および Azure DevOps による技術的負債の管理ラボ** |
-| スコープ | **Custom Defined** |
-| 適用範囲 | **Code** |
-| アクセス許可 | **読み取りと書き込み** |
+     | 設定 | 値 |
+     | --- | --- |
+     | 名前 | **SonarCloud および Azure DevOps による技術的負債の管理ラボ** |
+     | スコープ | **カスタム定義済み** |
+     | 適用範囲 | **コード** |
+     | アクセス許可 | **読み取りと書き込み** |
 
 1.   「**成功**」 ペインで個人用アクセス トークンの値をクリップボードにコピーします。
 
-> **注**: 必ずトークンの値を記録してください。このペインを閉じると、取得できなくなります。 
+     > **注**: 必ずトークンの値を記録してください。このペインを閉じると、取得できなくなります。 
 
 1.   「**成功**」 ペインで 「**Close**」 をクリックします。
 
@@ -231,7 +231,7 @@ Azure DevOps では、「*技術的負債*」という言葉は戦術的な目�
 
     > **注**: YAML パイプラインは、このタスクの残りの手順に従って変更する必要があります。 
 
-1.  「**VSBuild@1**」 タスクで、`solution: 'SomeConsoleApplication.sln'` を `solution: '**\SomeConsoleApplication.sln'` に置き換え、このソリューションがリポジトリのルートにないことを考慮に入れます。
+1.  「**VSBuild@1**」 タスクで、`solution: 'SomeConsoleApplication.sln'` を `solution: '**\SomeConsoleApplication.sln**'` に置き換え、このソリューションがリポジトリのルートにないことを考慮に入れます。
 1.  「**SonarCloudPrepare@1**」 タスクで `organization: 'myorga'` エントリの `myorga` プレースホルダーの値を SonarCloud 組織の名前に置き換えます。
 1.  「**SonarCloudPrepare@1**」 タスクで、`projectKey: 'dotnet-framework-on-azdo'` エントリの `dotnet-framework-on-azdo` を SonarCloud プロジェクト キーの名前に置き換えます。
 1.  「**SonarCloudPrepare@1**」 タスクで、`projectName: 'Sample .NET Framework project with Azure DevOps'` エントリの `Sample .NET Framework project with Azure DevOps` を SonarCloud プロジェクトの名前 (`SonarExamples`) に置き換えます。

@@ -1,10 +1,10 @@
 ---
 lab:
-    title: 'ラボ: Azure Artifacts を使用したパッケージ管理'
+    title: 'ラボ: Azure Artifacts によるパッケージ管理'
     module: 'モジュール 9: 依存関係管理戦略の設計と実装'
 ---
 
-# ラボ: Azure Artifacts を使用したパッケージ管理
+# ラボ: Azure Artifacts によるパッケージ管理
 # 学生用ラボ マニュアル
 
 ## ラボの概要
@@ -41,18 +41,18 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
 -   ユーザー名: **Student**
 -   パスワード: **Pa55w.rd**
 
-#### このラボに必要なアプリケーションを確認する
+#### このラボで必要なアプリケーションのレビュー
 
-このラボで使用するアプリケーションを特定する:
+このラボで使用するアプリケーションを特定:
     
 -   Microsoft Edge
--   [Visual Studio ダウンロード ページ](https://visualstudio.microsoft.com/downloads/) から入手可能な Visual Studio 2019 Community Edition。Visual Studio 2019 のインストールには、**ASP.NET とWeb 開発**、**Azure 開発**、および **NET Coreクロスプラットフォーム開発**ワークロードが含まれている必要があります。これはすでにラボのコンピューターにプリインストールされています。
+-   Visual Studio 2019 Community Edition ([Visual Studio Downloads page](https://visualstudio.microsoft.com/downloads/) から入手可能)Visual Studio 2019 のインストールには、**ASP<nolink>.NET および Web 開発**、**Azure 開発**、**NET Core クロスプラットフォーム開発** ワークロードを含める必要があります。これはすでにラボのコンピューターに事前インストールされています。
 
 #### Azure DevOps 組織を設定する
 
-このラボで使用できる Azure DevOps 組織がまだない場合は、[組織またはプロジェクト コレクションの作成](https://docs.microsoft.com/ja-jp/azure/devops/organizations/accounts/create-organization?view=azure-devops)の手順に従って作成してください。
+このラボで使用できる Azure DevOps 組織がまだない場合は、[組織またはプロジェクト コレクションの作成](https://docs.microsoft.com/ja-jp/azure/devops/organizations/accounts/create-organization?view=azure-devops) で利用できる手順に従って作成してください。
 
-### 演習 0: ラボの前提条件を構成する
+### 演習 0: ラボの前提条件の構成
 
 この演習では、ラボの前提条件を設定します。これには、Azure DevOps Demo Generator テンプレートと Visual Studio 構成に基づいて事前構成された Parts Unlimited チーム プロジェクトが含まれます。
 
@@ -60,19 +60,19 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
 
 このタスクでは、Azure DevOps Demo Generator を使用して、**PartsUnlimited** テンプレートに基づいて新しいプロジェクトを生成します。
 
-1.  ラボ コンピューターで、Web ブラウザーを起動し、[Azure DevOps Demo Generator](https://azuredevopsdemogenerator.azurewebsites.net) に移動します。このユーティリティ サイトは、ラボに必要なコンテンツ (作業項目、リポジトリなど) が事前に入力されたアカウント内に新しい Azure DevOps プロジェクトを作成するプロセスを自動化します。 
+1.  ラボのコンピューターで Web ブラウザーを起動し、[Azure DevOps Demo Generator](https://azuredevopsdemogenerator.azurewebsites.net) に移動します。このユーティリティ サイトは、ラボで必要なコンテンツ (作業項目、リポジトリなど) が事前設定されている新しい Azure DevOps プロジェクトをアカウント内で作成するプロセスを自動化します。 
 
-    > **注**: サイトの詳細については、https://docs.microsoft.com/ja-jp/azure/devops/demo-gen を参照してください。
+    > **注**: サイトの詳細については、https://docs.microsoft.com/ja-jp/azure/devops/demo-gen をご覧ください。
 
-1.  「**サインイン**」 をクリックし、Azure DevOps サブスクリプションに関連付けられている Microsoft アカウントを使用してサインインします。
-1.  必要な場合は、**Azure DevOps Demo Generator** ページで、「**承諾する**」 をクリックして、Azure DevOps サブスクリプションにアクセスするためのアクセス許可の要求を受け入れます。
+1.  「**サインイン**」 をクリックし、Azure DevOps サブスクリプションに関連のある Microsoft アカウントを使用してサインインします。
+1.  必要な場合は、「**Azure DevOps Demo Generator**」 ページで 「**承諾する**」 をクリックし、Azure DevOps サブスクリプションへのアクセス許可要求を承諾します。
 1.  「**新しいプロジェクトの作成**」 ページの 「**新しいプロジェクト名**」 テキストボックスに「A**zure Artifacts を使用したパッケージ管理**」と入力し、「**組織の選択**」 ドロップダウン リストで、Azure DevOps 組織を選択して、「**テンプレートの選択**」 をクリックします。
 1.  「**テンプレートの選択**」 ページのテンプレートのリストで、「**PartsUnlimited**」 テンプレートをクリックし、「**テンプレートの選択**」 をクリックします。
-1.  「**新規プロジェクトの作成**」 ページで、「**プロジェクトの作成**」 をクリックします
+1.  再び 「**新しいプロジェクトの作成**」 ページで 「**プロジェクトの作成**」 をクリックします。
 
     > **注**: プロセスが完了するまでお待ちください。これにはおよそ 2 分かかります。プロセスが失敗した場合は、DevOps 組織に移動し、プロジェクトを削除して、再試行してください。
 
-1.  「**新規プロジェクトの作成**」 ページで、「**プロジェクトに移動**」 をクリックします
+1.  「**新しいプロジェクトの作成**」 ページで 「**プロジェクトに移動**」 をクリックします。
 
 #### タスク 2: Visual Studio で Parts Unlimited ソリューションを構成する
 
@@ -159,11 +159,11 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
 1.  「**フィードに接続**」 ペインの 「**NuGet**」 セクションに移動し、「**NuGet.exe**」 を選択します。これにより、「**NuGet.exe**」 ペインが表示されます。
 1.  「**NuGet.exe**」 ペインで、「**ツールの取得**」 をクリックします。
 1.  「**ツールの取得**」 ペインで、「**最新の NuGet をダウンロードする**」 リンクをクリックします。これにより、「**利用可能な NuGet 配布バージョン**」 ページを表示する別のブラウザー タブが自動的に開きます。
-1.  「**利用可能な NuGet 配布バージョン**」 ページで、最新のnugetバージョンへのリンクをクリックし、実行可能ファイルをローカルの**ダウンロード** フォルダーにダウンロードします。
+1.  「**利用可能な NuGet 配布バージョン**」 ページで、nuget.exe のバージョン **v5.5.1** を選択し、実行可能ファイルをローカルの**ダウンロード** フォルダーにダウンロードします。
 1.  **Visual Studio** ウィンドウに切り替えます。「**ソリューション エクスプローラー**」 ペインで、**PartsUnlimited.Shared** プロジェクト ノードを右クリックし、右クリック メニューで 「**ファイル エクスプローラーでフォルダーを開く**」 を選択します。
 1.  「ファイル エクスプローラー」 ウィンドウ内で、ダウンロードした **nuget.exe** ファイルを**ダウンロード** フォルダーから **csproj** ファイルを含むフォルダーに移動します。
 1.  同じファイル エクスプローラー ウィンドウで、「**ファイル**」 メニュー ヘッダーを選択し、ドロップダウン メニューで 「**Windows PowerShell を開く**」 を選択し、カスケード メニューで 「**管理者として Windows PowerShell を開く**」 をクリックします。 
-1.  **管理者: Windows PowerShell** ウィンドウで、次のコマンドを実行して、プロジェクトから **nupkg** ファイルを作成します。 
+1.  **管理者: 「Windows PowerShell」** ウィンドウで、次のコマンドを実行して、プロジェクトから **nupkg** ファイルを作成します。 
 
     > **注**: これは、デプロイ用に NuGet ビットをパッケージ化するためのショートカットです。NuGet は高度にカスタマイズ可能です。詳細については、[NuGet パッケージの作成ページ](https://docs.microsoft.com/ja-jp/nuget/create-packages/overview-and-workflowhttps:/docs.microsoft.com/ja-jp/nuget/create-packages/overview-and-workflow)を参照してください。
 
@@ -181,10 +181,10 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
 
 1.  **管理者: Windows PowerShell** ウィンドウに切り替え、次のコマンドを実行して、パッケージを **PartsUnlimitedShared** フィードに公開します。
 
-    > **注**: **API キー**を指定する必要があります。これは、空でない文字列にすることができます。ここでは **VSTS** を使用しています。プロンプトが表示されたら、Azure DevOps 組織にサインインします。 
+    > **注**: **API キー**を指定する必要があります。これは、空でない文字列にすることができます。ここでは **AzDO** を使用しています。プロンプトが表示されたら、Azure DevOps 組織にサインインします。 
 
     ```
-    ./nuget.exe push -source "PartsUnlimitedShared" -ApiKey VSTS PartsUnlimited.Shared.1.0.0.nupkg
+    ./nuget.exe push -source "PartsUnlimitedShared" -ApiKey AzDO PartsUnlimited.Shared.1.0.0.nupkg
     ```
 1.  Azure DevOps ポータルを表示する Web ブラウザー ウィンドウに切り替え、垂直ナビゲーションペインで 「**アーティファクト**」 を選択します。
 1.  **アーティファクト** ハブ ペインで、左上隅のドロップダウンリストをクリックし、フィードのリストで、**PartsUnlimitedShared** エントリを選択します。
@@ -198,8 +198,7 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
 このタスクでは、NuGet パッケージをインポートします。
 
 1.  **Parts Unlimited** ソリューションを表示している **Visual Studio** ウィンドウに切り替えます。
-1.  「**ソリューション エクスプローラー**」 ペインで、**PartsUnlimitedWebsite** プロジェクトの下の 「**参照**」 ノードを右クリックし、右クリックメニューで 「**NuGet パッケージの管理**」 を選択します。 
-これにより、ウィンドウの中央ペインに 「**NuGet: PartsUnlimitedWebsite**」 タブが開きます。
+1.  「**ソリューション エクスプローラー**」 ペインで、**PartsUnlimitedWebsite** プロジェクトの下の 「**参照**」 ノードを右クリックし、右クリックメニューで 「**NuGet パッケージの管理**」 を選択します。これにより、ウィンドウの中央ペインに 「**NuGet: PartsUnlimitedWebsite**」 タブが開きます。
 1.  「**NuGet: PartsUnlimitedWebsite**」 ペインで、「**参照**」 タブをクリックし、ペインの右上隅にある 「**パッケージ ソース**」 ドロップダウン リストで、「**PartsUnlimitedShared**」 を選択します。 
 
     > **注**: パッケージのリストは、追加した単一のパッケージのみで構成されます。
@@ -230,8 +229,8 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
             static public decimal CalculateTax(decimal taxable, string postalCode)
             {
                 return taxable * (decimal).1;
+            }
         }
-    }
     }
     ```
 
@@ -252,7 +251,7 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
     > **注**: 公開されたアーティファクトのバージョン番号は、パッケージのバージョン更新を反映するように変更されています。
 
     ```
-    ./nuget.exe push -source "PartsUnlimitedShared" -ApiKey VSTS PartsUnlimited.Shared.1.1.0.nupkg
+    ./nuget.exe push -source "PartsUnlimitedShared" -ApiKey AzDO PartsUnlimited.Shared.1.1.0.nupkg
     ```
 
 1.  **PartsUnlimitedShared1.0.0** アーティファクト ペインを備えた Azure DevOps ポータルを表示する Web ブラウザー ウィンドウに切り替えます。
@@ -267,7 +266,7 @@ Azure Artifacts は、Azure DevOps での NuGet、npm、Maven パッケージの
 
     > **注**: 「**更新**」 タブの内容で示されているように、NuGet は更新を認識しています。 
 
-1.  **NuGet: PartsUnlimitedWebsite** ペインで、「**更新**」 タブをクリックし、検索テキストボックスに「**PartsUnlimited.Shared**」と入力し、ペインの右側の バージョン「**最新の安定版1.1.0**」 ドロップダウン リストの横にある 「**更新**」 をクリックして、新しいバージョンをインストールします。 
+1.  「**NuGet: PartsUnlimitedWebsite** ペインで、「**更新**」 タブをクリックし、検索テキストボックスに「**PartsUnlimited.Shared**」と入力し、ペインの右側の 「**バージョン** **最新の安定版1.1.0**」 ドロップダウン リストの横にある 「**更新**」 をクリックして、新しいバージョンをインストールします。 
 
     > **注**: 利用可能な NuGet の更新が多数ある場合がありますが、更新する必要があるのは **PartsUnlimited.Shared** のみです。パッケージが完全に更新できるようになるまで、少し時間がかかる場合があることに注意してください。エラーが発生した場合は、しばらく待ってから再試行してください。
 

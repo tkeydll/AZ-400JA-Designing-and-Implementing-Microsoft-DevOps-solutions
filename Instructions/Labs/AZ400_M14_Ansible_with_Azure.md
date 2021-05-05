@@ -1,10 +1,10 @@
 ---
 lab:
-    title: 'ラボ: Azure と Ansible'
+    title: 'ラボ: Ansible と Azure'
     module: 'モジュール 14: Azure で利用可能なコード ツールとしてのサード パーティ インフラストラクチャ'
 ---
 
-# ラボ: Azure と Ansible
+# ラボ: Ansible と Azure
 # 学生用ラボ マニュアル
 
 ## ラボの概要
@@ -213,7 +213,7 @@ Ansible では、管理対象リソースをホスト インベントリで文�
 
 このタスクでは、Azure CLI を使用して Azure VM をデプロイし、Ansible 環境を管理できるように構成します。
 
-> **注**: Ansible 静的ホスト インベントリは **etc/ansible/hosts** ファイルを使用します。Azure Cloud Shell は非動的インベントリで Ansible 管理を実装するためのルート アクセスを提供せず、ストレージ オプションがユーザーの **$Home** ディレクトリに制限されるため、Linux を実行している Azure VM をデプロイして、Ansible 管理システムとして構成します。
+> **注**: Ansible 静的ホスト インベントリは **/etc/ansible/hosts** ファイルを使用します。Azure Cloud Shell は非動的インベントリで Ansible 管理を実装するためのルート アクセスを提供せず、ストレージ オプションがユーザーの **$Home** ディレクトリに制限されるため、Linux を実行している Azure VM をデプロイして、Ansible 管理システムとして構成します。
 
 1.  Azure portal のツールバーで、検索テキスト ボックスのすぐ右側にある **Cloud Shell** アイコンをクリックします。 
 
@@ -551,8 +551,8 @@ Ansible では、管理対象リソースをホスト インベントリで文�
 
     > **注**: 無効な VM 名を入力すると、以下のエラーが返される可能性があります:
 
-    - `fatal: [localhost]: FAILED! => {"changed": false, "failed": true, "msg": "The storage account named storageaccountname is already taken. - Reason.already_exists"}`. これを解決するには、Azure VM の別の名前を使ってください。使用された名前はグローバルに一意ではありません。
-    - `fatal: [localhost]: FAILED! => {"changed": false, "failed": true, "msg": "Error creating or updating your-vm-name - Azure Error: InvalidDomainNameLabel\nMessage: VM のドメイン名ラベルは無効です。以下の正規表現に従う必要があります: ^「a-z」「a-z0-9-」{1,61}「a-z0-9」$.”}`. この問題を解決するには、必要な命名規則に従って、Azure VM に別の名前を使用してください。 
+    - `fatal: [localhost]: FAILED! => {"changed": false, "failed": true, "msg": "The storage account named storageaccountname is already taken.- Reason.already_exists"}`.これを解決するには、Azure VM の別の名前を使ってください。使用された名前はグローバルに一意ではありません。
+    - `fatal: [localhost]: FAILED! => {"changed": false, "failed": true, "msg": "Error creating or updating your-vm-name - Azure Error: InvalidDomainNameLabel\nMessage: VM のドメイン名ラベルは無効です。以下の正規表現に従う必要があります: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.”}`.この問題を解決するには、必要な命名規則に従って、Azure VM に別の名前を使用してください。 
 
     > **注**: デプロイが完了するのを待ちます。3 分間程度かかる場合があります。 
 
@@ -653,7 +653,7 @@ Ansible では、管理対象リソースをホスト インベントリで文�
     sudo nano /etc/ansible/ansible.cfg
     ```
 
-1.  Nano エディター インターフェイス内の `「Default」` セクションで、最初のハッシュ文字 `#` をライン `#host_key_checking = False` から削除します
+1.  Nano エディター インターフェイス内の `[Default]` セクションで、最初のハッシュ文字 `#` をライン `#host_key_checking = False` から削除します
 1.  Nano エディター インターフェイス内で **ctrl + o** キーの組み合わせを押し、**Enter** キーを押してから **ctrl + x** キーの組み合わせを押して変更を保存し、ファイルを閉じます。
 1.  Cloud Shell ペインのバッシュ セッションから、Ansible コントロール マシンとして構成されている Azure VM への SSH セッション内で以下を実行し、Nano テキスト エディターで cron ジョブを構成するプレイブックを開きます:
 
@@ -725,7 +725,7 @@ Ansible では、管理対象リソースをホスト インベントリで文�
 
 > **注**: 前のタスクで説明されているように、Ansible を使うと、該当するモジュールでサポートされている既存のリソースの構成逸脱を修正できます。ただし、Ansible を使用して、Azure Resource Manager テンプレートを参照するプレイブックをデプロイすることも可能です。これにより、Azure Resource Manager の提供する機能とリソースに直接アクセスできます。 
 
-> **注**: 別の Azure VM をデプロイしますが、今回は Azure Resource Manager テンプレートを参照する ansible プレイブックを使用します。作業をシンプルにするため、[単一のストレージ アカウントをプロビジョニングする非常にわかりやすい Azure クイックスタート テンプレート](https://github.com/Azure/azure-quickstart-templates/tree/master/101-storage-account-create) を利用します。関連のあるプレイブックの構文は、**PartsUnlimitedMRP/Labfiles/AZ-400T05-ImplemntgAppInfra/Labfiles/ansible/new_ARM_deployment.yml** プレイブックで確認できます。
+> **注**: 別の Azure VM をデプロイしますが、今回は Azure Resource Manager テンプレートを参照する ansible プレイブックを使用します。作業をシンプルにするため、[単一のストレージ アカウントをプロビジョニングする非常にわかりやすい Azure クイックスタート テンプレート](https://github.com/Azure/azure-quickstart-templates/tree/master/101-storage-account-create) を利用します。関連のあるプレイブックの構文は、**/PartsUnlimitedMRP/Labfiles/AZ-400T05-ImplemntgAppInfra/Labfiles/ansible/new_ARM_deployment.yml** プレイブックで確認できます。
 
 1.  Cloud Shell ペインのバッシュ セッションから、Ansible コントロール マシンとして構成されている Azure VM への SSH セッション内、および Web サーバーとして構成されている Azure VM への SSH セッション内で以下を実行し、Azure Resource Manager を呼び出すプレイブックを Nano テキスト エディターで開きます:
 

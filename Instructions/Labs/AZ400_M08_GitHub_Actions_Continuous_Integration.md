@@ -1,7 +1,7 @@
 ---
 lab:
-  title: "ラボ: GitHub Actions継続的インテグレーション"
-  module: "モジュール 8: GitHub Actionsとの継続的インテグレーションの実装"
+  title: 'ラボ: GitHub Actions継続的インテグレーション'
+  module: 'モジュール 8: GitHub Actionsとの継続的インテグレーションの実装'
 ---
 
 # ラボ: GitHub Actions の継続的インテグレーション

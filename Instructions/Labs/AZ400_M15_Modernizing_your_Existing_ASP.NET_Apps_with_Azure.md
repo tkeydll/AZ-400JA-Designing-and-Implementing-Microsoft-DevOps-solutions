@@ -1,10 +1,10 @@
 ---
 lab:
-    title: 'ラボ: 既存の ASP.NET アプリを Azure でモダン化する'
+    title: 'ラボ: Azure を使用した既存の ASP.NET アプリのモダン化'
     module: 'モジュール 15: Docker を使用したコンテナーの管理'
 ---
 
-# ラボ: 既存の ASP.NET アプリを Azure でモダン化する
+# ラボ: Azure を使用した既存の ASP.NET アプリのモダン化
 # 学生用ラボ マニュアル
 
 ## ラボの概要
@@ -179,7 +179,7 @@ Azure への移行の一環として Web アプリケーションをモダン化
 1.  「**コンテナー オーケストレーション サポートの追加**」 ダイアログ ボックスの 「**コンテナー オーケストレーター**」 ドロップダウン リストで、「**Docker Compose**」 を選択して 「**OK**」 をクリックします。Visual Studio ウィンドウの中央のペインで 「**Dockerfile**」 タブが自動的に開きます。
 1.  Docker Desktop を起動するよう指示されたら「**はい**」をクリックします。 
 
-    > **注**: Visual Studio は自動的に必要なファイルをソリューションに追加します (**docker-compose** プロジェクトや **Dockerfile** など)。また、プロジェクトを調べて、プロジェクトでの使用に適したベース イメージを判定します。Nerd Dinner ソリューションの場合は、**microsoft/aspnet:4.8-windowsservercore-ltsc2019 ベース イメージを使用するよう選択されています。
+    > **注**: Visual Studio は自動的に必要なファイルをソリューションに追加します (**docker-compose** プロジェクトや **Dockerfile** など)。また、プロジェクトを調べて、プロジェクトでの使用に適したベース イメージを判定します。Nerd Dinner ソリューションの場合は、**microsoft/aspnet:4.8-windowsservercore-ltsc2019** ベース イメージを使用するよう選択されています。
 
     ```csharp
     FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2019
@@ -225,7 +225,7 @@ Azure への移行の一環として Web アプリケーションをモダン化
 1.  「**発行**」 ウィザードの 「**今日はどこで発行していますか?**」 ペインで、「**Azure**」 オプションが選択されていることを確認し、「**次へ**」 をクリックします。
 1.  「**発行**」 ウィザードの 「**どの Azure サービスを使用してアプリケーションをホストしますか?**」 ページで 「**Azure Container Registry**」 オプションを選択し、「**次へ**」 をクリックします。
 1.  「**発行**」 ウィザードの 「**既存の Azure Container Registry を選択するか、新しい Azure Container Registry を作成**」 ページで、必要に応じて 「**サインイン**」 をクリックします。指示されたら、このラボで使用している Azure サブスクリプションで少なくとも共同作成者のロールがあるユーザー アカウントを使ってサインインします。
-1.  「**発行**」 ウィザードの 「**既存の Azure Container Registry を選択するか、新しい Azure Container Registry を作成**」 ページで、プラス記号をクリックします。
+1.  「**発行**」 ウィザードの 「**既存の Azure Container Registry を選択するか、新しい Azure Container Registry を作成**」 ページでプラス記号をクリックします。
 1.  「**新規作成**」 ダイアログ ボックスで以下の設定を指定し、「**作成**」 をクリックします:
 
     | 設定 | 値 | 
@@ -236,7 +236,7 @@ Azure への移行の一環として Web アプリケーションをモダン化
     | SKU | **Standard** |
     | レジストリの場所 | Azure SQL データベースのデプロイで選択したものと同じ Azure リージョン |
 
-1.  「**発行**」 ウィザードの 「**既存の Azure Container Registry を選択するか、新しい Azure Container Registry を作成**」 ページに戻り、**終了** をクリックします。
+1.  「**発行**」 ウィザードの 「**既存の Azure Container Registry を選択するか、新しい Azure Container Registry を作成**」 ページに戻り、「**終了**」 をクリックします。
 1.  Visual Studio インターフェイスの 「**NerdDinner**」 タブで 「**発行**」 をクリックします。
 
     > **注**: 発行操作が完了するまでお待ちください。発行アクションの結果、Docker イメージが作成され、Azure Container Registry にプッシュされます。
