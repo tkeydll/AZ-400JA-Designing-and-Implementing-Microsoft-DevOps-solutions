@@ -396,7 +396,7 @@ lab:
     with
 
     ```json
-   "dependsOn": [
+    "dependsOn": [
      "linkedTemplate",
      "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
     ```
