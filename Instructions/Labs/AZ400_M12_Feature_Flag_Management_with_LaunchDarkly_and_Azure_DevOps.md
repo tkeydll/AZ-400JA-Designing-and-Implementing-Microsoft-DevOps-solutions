@@ -129,7 +129,7 @@ Web ブラウザーを使用して [LaunchDarkly Web サイト](https://launchda
 
 1.  Web アプリケーション インターフェイスの表示されている Web ブラウザー ウィンドウを閉じます。
 1.  Visual Studio ウィンドウの**ソリューション エクスプローラー**で、**PartsUnlimitedWebsite\\Controllers\\HomeController.cs** に移動してこれを開きます。その内容を [the updated HomeController.cs code snippet](https://raw.githubusercontent.com/Microsoft/azuredevopslabs/master/labs/vstsextend/launchdarkly/codesnippet/HomeController.cs) で入手できるコードに置き換え、変更を保存します。 
-1.  Visual Studio ウィンドウの**ソリューション エクスプローラー**で、**PartsUnlimitedWebsite\\Controllers\\HomeController.cs** に移動してこれを開きます。その内容を [the updated HomeController.cs code snippet](https://raw.githubusercontent.com/Microsoft/azuredevopslabs/master/labs/vstsextend/launchdarkly/codesnippet/AccountController.cs) で入手できるコードに置き換え、変更を保存します。 
+1.  Visual Studio ウィンドウの**ソリューション エクスプローラー**で、**PartsUnlimitedWebsite\\Controllers\\AccountController.cs** に移動してこれを開きます。その内容を [the updated AccountController.cs code snippet](https://raw.githubusercontent.com/Microsoft/azuredevopslabs/master/labs/vstsextend/launchdarkly/codesnippet/AccountController.cs) で入手できるコードに置き換え、変更を保存します。 
 1.  Visual Studio ウィンドウの**ソリューション エクスプローラー**で、**PartsUnlimitedWebsite\\Views\Shared\\_Layout.chtml** に移動してこれを開き、ライン 55 の `@await Html.PartialAsync("_Login")` を以下のコードに置き換えます。
 
     ```cshtml
